@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
 
         <!--LEFT GRID FOR DISPLAY-->
-        <Grid Grid.Column="0" Background="#0865b8">
+        <Grid Grid.Column="0" Background="#292d37">
             <Grid Margin="150">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="250"/>
@@ -104,7 +104,7 @@ VerticalAlignment="Center" Margin="20,0,0,0"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse Grid.Column="0" Height="50" Fill="#0865b8"/>
+                    <Ellipse Grid.Column="0" Height="50" Fill="#292d37"/>
                     <Label Grid.Column="1" Foreground="Black"
                            Content="BSIT-2A" FontSize="25"
                            Margin="5,0,0,0" FontWeight="DemiBold"
@@ -135,9 +135,9 @@ VerticalAlignment="Center" Margin="20,0,0,0"/>
                         <Label Background="#ebf1ff" Grid.Row="0" Content="Username" FontFamily="Inter"
                                FontSize="20" Margin="0,0,0,0"/>
 
-                        <TextBlock Grid.Row="1" Text="Username" 
+                        <TextBox x:Name="tbUsername" Grid.Row="1" 
                                    VerticalAlignment="Center" FontFamily="Inter"
-                           FontSize="20" Margin="5,0,0,0" Foreground="DarkGray"/>
+                           FontSize="20" Margin="5,0,0,0" Foreground="DarkGray" Height="44" Text="libHelena"/>
                     </Grid>
 
                     <Grid Height="100" Background="White">
@@ -149,16 +149,16 @@ VerticalAlignment="Center" Margin="20,0,0,0"/>
                         <Label Background="#ebf1ff" Grid.Row="0" Content="Password" FontFamily="Inter"
             FontSize="20" Margin="0,0,0,0"/>
 
-                        <TextBlock Grid.Row="1" Text="Password" 
+                        <TextBox x:Name="tbPassword" Grid.Row="1" 
                 VerticalAlignment="Center" FontFamily="Inter"
-        FontSize="20" Margin="5,0,0,0" Foreground="DarkGray"/>
+        FontSize="20" Margin="5,0,0,0" Foreground="DarkGray" Height="44" Text="hkg123"/>
                     </Grid>
                 </StackPanel>
 
-                <Button Grid.Row="2" VerticalAlignment="Center" Height="50"
-                        Width="500" Background="#0865b8" Content="Login"
+                <Button x:Name="btnLogin" Grid.Row="2" VerticalAlignment="Center" Height="50"
+                        Width="500" Background="#26ad7c" Content="Login"
                         Foreground="White" FontFamily="Inter" FontSize="20"
-                        FontWeight="DemiBold" Click="Button_Click"/>
+                        FontWeight="DemiBold" Click="login_btn_Click"/>
             </Grid>
         </Grid>
     </Grid>

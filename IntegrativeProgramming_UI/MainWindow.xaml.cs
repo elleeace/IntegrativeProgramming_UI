@@ -15,20 +15,77 @@ using System.Windows.Shapes;
 
 namespace IntegrativeProgramming_UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        NorthvilleLibraryDataContext db = new NorthvilleLibraryDataContext(Properties.Settings.Default.NorthvilleLibraryV2ConnectionString);
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void login_btn_Click(object sender, RoutedEventArgs e)
         {
-            StudentView studentView = new StudentView();
-            studentView.Show();
+            if (tbUsername.Text == "" || tbPassword.Text == "")
+            {
+                MessageBox.Show("Please enter username and password");
+                return;
+            }
+
+            else
+            {
+                if (comparingPassword(fetchingPassword()) == 0)
+                {
+                    MessageBox.Show("Login Successful", "Welcome Back!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                    var users = (from u in db.users
+                                 where u.username == tbUsername.Text
+                                 select u).FirstOrDefault();
+
+                    if (users.user_role == "Librarian")
+                    {
+                        LibrarianAdminView librarianAdminView = new LibrarianAdminView();
+                        librarianAdminView.Show();
+                        this.Close();
+                    }
+                    else if (users.user_role == "Student")
+                    {
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        private string fetchingPassword()
+        {
+            string fetchedPassword = "";
+
+            var users = (from u in db.users
+                         where u.username == tbUsername.Text
+                         select u).FirstOrDefault();
+
+            if (users == null)
+            {
+                return "";
+            }
+
+            fetchedPassword = users.user_password;
+            return fetchedPassword;
+        }
+
+        private int comparingPassword(string fetchedPassword)
+        {
+            if (tbPassword.Text == fetchedPassword)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
         }
     }
 }

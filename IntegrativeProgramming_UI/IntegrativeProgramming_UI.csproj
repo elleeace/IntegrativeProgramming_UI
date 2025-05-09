@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,13 +56,44 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="LibrarianView.xaml.cs">
-      <DependentUpon>LibrarianView.xaml</DependentUpon>
+    <Compile Include="Helpers\CRUDHelper.cs" />
+    <Compile Include="Helpers\FormBuilder.cs" />
+    <Compile Include="LibrarianAdminView.xaml.cs">
+      <DependentUpon>LibrarianAdminView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StudentView.xaml.cs">
-      <DependentUpon>StudentView.xaml</DependentUpon>
+    <Compile Include="Helpers\MainAction.cs" />
+    <Compile Include="Helpers\MainActionBuilder.cs" />
+    <Compile Include="Models\Catalog\BookCopy.cs" />
+    <Compile Include="Models\Catalog\BookCopyDisplay.cs" />
+    <Compile Include="Models\Logs\Attendance.cs" />
+    <Compile Include="Models\Logs\AttendanceDisplay.cs" />
+    <Compile Include="Models\Logs\BorrowTransactionDisplay.cs" />
+    <Compile Include="Models\Logs\BorrowTransactionModel.cs" />
+    <Compile Include="Models\Manage\Course.cs" />
+    <Compile Include="Models\Logs\FineModel.cs" />
+    <Compile Include="Models\Logs\PaymentModel.cs" />
+    <Compile Include="Models\Manage\Student.cs" />
+    <Compile Include="Models\Manage\User.cs" />
+    <Compile Include="NorthvilleLibrary.cs">
+      <DependentUpon>NorthvilleLibrary.dbml</DependentUpon>
     </Compile>
-    <Page Include="LibrarianView.xaml">
+    <Compile Include="NorthvilleLibrary.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthvilleLibrary.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LogServices\AttendanceService.cs" />
+    <Compile Include="Services\CatalogServices\BookCopyService.cs" />
+    <Compile Include="Services\LogServices\BorrowService.cs" />
+    <Compile Include="Models\Logs\FineDisplay.cs" />
+    <Compile Include="Services\ManageServices\CourseService.cs" />
+    <Compile Include="Services\LogServices\FineService.cs" />
+    <Compile Include="Services\LogServices\PaymentService.cs" />
+    <Compile Include="Services\ManageServices\StudentService.cs" />
+    <Compile Include="Services\ManageServices\UserService.cs" />
+    <Compile Include="Helpers\UIConstants.cs" />
+    <Compile Include="Helpers\ViewReloader.cs" />
+    <Page Include="LibrarianAdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -77,10 +109,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StudentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -100,6 +128,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="NorthvilleLibrary.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>NorthvilleLibrary.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NorthvilleLibrary.dbml.layout">
+      <DependentUpon>NorthvilleLibrary.dbml</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,7 +145,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
