@@ -15,7 +15,7 @@ namespace IntegrativeProgramming_UI
         private static TextBlock CreateLabel(string text) => new TextBlock
         {
             Text = text,
-            Foreground = Brushes.White,
+            Foreground = Brushes.Gray,
             Margin = new Thickness(0, 10, 0, 5)
         };
 
@@ -24,7 +24,7 @@ namespace IntegrativeProgramming_UI
             Name = name,
             Text = text,
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d1f26")),
-            Foreground = Brushes.White,
+            Foreground = Brushes.Gray,
             Padding = new Thickness(10),
             Margin = new Thickness(0, 0, 0, 15),
             BorderThickness = new Thickness(0)
@@ -35,7 +35,7 @@ namespace IntegrativeProgramming_UI
         {
             ItemsSource = items.ToList(),
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d1f26")),
-            Foreground = Brushes.White,
+            Foreground = Brushes.Gray,
             Padding = new Thickness(5),
             Margin = new Thickness(0, 0, 0, 15),
             BorderThickness = new Thickness(0)
@@ -47,7 +47,7 @@ namespace IntegrativeProgramming_UI
             {
                 ItemsSource = items.ToList(),
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d1f26")),
-                Foreground = Brushes.White,
+                Foreground = Brushes.Gray,
                 Padding = new Thickness(5),
                 Margin = new Thickness(0, 0, 0, 15),
                 BorderThickness = new Thickness(0)
@@ -61,6 +61,7 @@ namespace IntegrativeProgramming_UI
             return comboBox;
         }
 
+        
         #region Create Form
         public static void ShowAddBookForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, Action onSuccess)
         {
@@ -480,6 +481,80 @@ namespace IntegrativeProgramming_UI
             };
 
             targetPanel.Children.Add(btnSubmit);
+        }
+
+        public static void BuildEditBookCopyForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string copyId, Action onSaved)
+        {
+            targetPanel.Children.Clear();
+
+            var copy = db.book_copies.FirstOrDefault(c => c.book_copy_id == copyId);
+            if (copy == null)
+            {
+                MessageBox.Show("Book copy not found.");
+                return;
+            }
+
+            // Copy ID (readonly)
+            targetPanel.Children.Add(CreateLabel("Copy ID"));
+            var txtCopyId = CreateTextBox("txtCopyId", copy.book_copy_id);
+            txtCopyId.IsEnabled = false;
+            targetPanel.Children.Add(txtCopyId);
+
+            // Book Status dropdown
+            var statusList = db.book_status.Select(s => new { s.book_status_id, s.status_description }).ToList();
+            var cbStatus = new ComboBox
+            {
+                ItemsSource = statusList,
+                DisplayMemberPath = "status_description",
+                SelectedValuePath = "book_status_id",
+                SelectedValue = copy.book_status_id,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d1f26")),
+                Foreground = Brushes.White,
+                Padding = new Thickness(5),
+                Margin = new Thickness(0, 0, 0, 15),
+                BorderThickness = new Thickness(0)
+            };
+            targetPanel.Children.Add(CreateLabel("Book Status"));
+            targetPanel.Children.Add(cbStatus);
+
+            // Location dropdown
+            var cbLocation = CreateComboBox(
+                db.book_locations.Select(l => l.location_id),
+                copy.location_id
+            );
+            targetPanel.Children.Add(CreateLabel("Location"));
+            targetPanel.Children.Add(cbLocation);
+
+            var btnUpdate = new Button
+            {
+                Content = "Update Book Copy",
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            btnUpdate.Click += (s, e) =>
+            {
+                if (cbStatus.SelectedValue == null || cbLocation.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select both status and location.");
+                    return;
+                }
+
+                try
+                {
+                    copy.book_status_id = cbStatus.SelectedValue.ToString();
+                    copy.location_id = cbLocation.SelectedItem.ToString();
+                    db.SubmitChanges();
+
+                    MessageBox.Show("Book copy updated successfully.");
+                    onSaved?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Update failed: " + ex.Message);
+                }
+            };
+
+            targetPanel.Children.Add(btnUpdate);
         }
 
         #endregion

@@ -54,9 +54,6 @@ namespace IntegrativeProgramming_UI
     partial void Insertbook_status(book_status instance);
     partial void Updatebook_status(book_status instance);
     partial void Deletebook_status(book_status instance);
-    partial void Insertborrow_transaction(borrow_transaction instance);
-    partial void Updateborrow_transaction(borrow_transaction instance);
-    partial void Deleteborrow_transaction(borrow_transaction instance);
     partial void Insertcourse(course instance);
     partial void Updatecourse(course instance);
     partial void Deletecourse(course instance);
@@ -69,6 +66,9 @@ namespace IntegrativeProgramming_UI
     partial void Insertpayment(payment instance);
     partial void Updatepayment(payment instance);
     partial void Deletepayment(payment instance);
+    partial void Insertborrow_transaction(borrow_transaction instance);
+    partial void Updateborrow_transaction(borrow_transaction instance);
+    partial void Deleteborrow_transaction(borrow_transaction instance);
     #endregion
 		
 		public NorthvilleLibraryDataContext() : 
@@ -165,14 +165,6 @@ namespace IntegrativeProgramming_UI
 			}
 		}
 		
-		public System.Data.Linq.Table<borrow_transaction> borrow_transactions
-		{
-			get
-			{
-				return this.GetTable<borrow_transaction>();
-			}
-		}
-		
 		public System.Data.Linq.Table<course> courses
 		{
 			get
@@ -242,6 +234,14 @@ namespace IntegrativeProgramming_UI
 			get
 			{
 				return this.GetTable<payment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<borrow_transaction> borrow_transactions
+		{
+			get
+			{
+				return this.GetTable<borrow_transaction>();
 			}
 		}
 		
@@ -1846,298 +1846,6 @@ namespace IntegrativeProgramming_UI
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="NorthvilleLibrary.borrow_transaction")]
-	public partial class borrow_transaction : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _borrow_id;
-		
-		private string _student_id;
-		
-		private string _book_copy_id;
-		
-		private System.DateTime _borrow_date;
-		
-		private System.Nullable<System.DateTime> _return_date;
-		
-		private string _borrow_status;
-		
-		private EntitySet<fine> _fines;
-		
-		private EntityRef<book_copy> _book_copy;
-		
-		private EntityRef<student> _student;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onborrow_idChanging(string value);
-    partial void Onborrow_idChanged();
-    partial void Onstudent_idChanging(string value);
-    partial void Onstudent_idChanged();
-    partial void Onbook_copy_idChanging(string value);
-    partial void Onbook_copy_idChanged();
-    partial void Onborrow_dateChanging(System.DateTime value);
-    partial void Onborrow_dateChanged();
-    partial void Onreturn_dateChanging(System.Nullable<System.DateTime> value);
-    partial void Onreturn_dateChanged();
-    partial void Onborrow_statusChanging(string value);
-    partial void Onborrow_statusChanged();
-    #endregion
-		
-		public borrow_transaction()
-		{
-			this._fines = new EntitySet<fine>(new Action<fine>(this.attach_fines), new Action<fine>(this.detach_fines));
-			this._book_copy = default(EntityRef<book_copy>);
-			this._student = default(EntityRef<student>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_id", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string borrow_id
-		{
-			get
-			{
-				return this._borrow_id;
-			}
-			set
-			{
-				if ((this._borrow_id != value))
-				{
-					this.Onborrow_idChanging(value);
-					this.SendPropertyChanging();
-					this._borrow_id = value;
-					this.SendPropertyChanged("borrow_id");
-					this.Onborrow_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_student_id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string student_id
-		{
-			get
-			{
-				return this._student_id;
-			}
-			set
-			{
-				if ((this._student_id != value))
-				{
-					if (this._student.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onstudent_idChanging(value);
-					this.SendPropertyChanging();
-					this._student_id = value;
-					this.SendPropertyChanged("student_id");
-					this.Onstudent_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_copy_id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string book_copy_id
-		{
-			get
-			{
-				return this._book_copy_id;
-			}
-			set
-			{
-				if ((this._book_copy_id != value))
-				{
-					if (this._book_copy.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onbook_copy_idChanging(value);
-					this.SendPropertyChanging();
-					this._book_copy_id = value;
-					this.SendPropertyChanged("book_copy_id");
-					this.Onbook_copy_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_date", DbType="Date NOT NULL")]
-		public System.DateTime borrow_date
-		{
-			get
-			{
-				return this._borrow_date;
-			}
-			set
-			{
-				if ((this._borrow_date != value))
-				{
-					this.Onborrow_dateChanging(value);
-					this.SendPropertyChanging();
-					this._borrow_date = value;
-					this.SendPropertyChanged("borrow_date");
-					this.Onborrow_dateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_return_date", DbType="Date")]
-		public System.Nullable<System.DateTime> return_date
-		{
-			get
-			{
-				return this._return_date;
-			}
-			set
-			{
-				if ((this._return_date != value))
-				{
-					this.Onreturn_dateChanging(value);
-					this.SendPropertyChanging();
-					this._return_date = value;
-					this.SendPropertyChanged("return_date");
-					this.Onreturn_dateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string borrow_status
-		{
-			get
-			{
-				return this._borrow_status;
-			}
-			set
-			{
-				if ((this._borrow_status != value))
-				{
-					this.Onborrow_statusChanging(value);
-					this.SendPropertyChanging();
-					this._borrow_status = value;
-					this.SendPropertyChanged("borrow_status");
-					this.Onborrow_statusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="borrow_transaction_fine", Storage="_fines", ThisKey="borrow_id", OtherKey="borrow_id")]
-		public EntitySet<fine> fines
-		{
-			get
-			{
-				return this._fines;
-			}
-			set
-			{
-				this._fines.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="book_copy_borrow_transaction", Storage="_book_copy", ThisKey="book_copy_id", OtherKey="book_copy_id", IsForeignKey=true)]
-		public book_copy book_copy
-		{
-			get
-			{
-				return this._book_copy.Entity;
-			}
-			set
-			{
-				book_copy previousValue = this._book_copy.Entity;
-				if (((previousValue != value) 
-							|| (this._book_copy.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._book_copy.Entity = null;
-						previousValue.borrow_transactions.Remove(this);
-					}
-					this._book_copy.Entity = value;
-					if ((value != null))
-					{
-						value.borrow_transactions.Add(this);
-						this._book_copy_id = value.book_copy_id;
-					}
-					else
-					{
-						this._book_copy_id = default(string);
-					}
-					this.SendPropertyChanged("book_copy");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="student_borrow_transaction", Storage="_student", ThisKey="student_id", OtherKey="student_id", IsForeignKey=true)]
-		public student student
-		{
-			get
-			{
-				return this._student.Entity;
-			}
-			set
-			{
-				student previousValue = this._student.Entity;
-				if (((previousValue != value) 
-							|| (this._student.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._student.Entity = null;
-						previousValue.borrow_transactions.Remove(this);
-					}
-					this._student.Entity = value;
-					if ((value != null))
-					{
-						value.borrow_transactions.Add(this);
-						this._student_id = value.student_id;
-					}
-					else
-					{
-						this._student_id = default(string);
-					}
-					this.SendPropertyChanged("student");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_fines(fine entity)
-		{
-			this.SendPropertyChanging();
-			entity.borrow_transaction = this;
-		}
-		
-		private void detach_fines(fine entity)
-		{
-			this.SendPropertyChanging();
-			entity.borrow_transaction = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="NorthvilleLibrary.course")]
 	public partial class course : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3230,9 +2938,9 @@ namespace IntegrativeProgramming_UI
 		
 		private bool _is_paid;
 		
-		private EntityRef<borrow_transaction> _borrow_transaction;
-		
 		private EntityRef<payment> _payment;
+		
+		private EntityRef<borrow_transaction> _borrow_transaction;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3254,8 +2962,8 @@ namespace IntegrativeProgramming_UI
 		
 		public fine()
 		{
-			this._borrow_transaction = default(EntityRef<borrow_transaction>);
 			this._payment = default(EntityRef<payment>);
+			this._borrow_transaction = default(EntityRef<borrow_transaction>);
 			OnCreated();
 		}
 		
@@ -3387,40 +3095,6 @@ namespace IntegrativeProgramming_UI
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="borrow_transaction_fine", Storage="_borrow_transaction", ThisKey="borrow_id", OtherKey="borrow_id", IsForeignKey=true)]
-		public borrow_transaction borrow_transaction
-		{
-			get
-			{
-				return this._borrow_transaction.Entity;
-			}
-			set
-			{
-				borrow_transaction previousValue = this._borrow_transaction.Entity;
-				if (((previousValue != value) 
-							|| (this._borrow_transaction.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._borrow_transaction.Entity = null;
-						previousValue.fines.Remove(this);
-					}
-					this._borrow_transaction.Entity = value;
-					if ((value != null))
-					{
-						value.fines.Add(this);
-						this._borrow_id = value.borrow_id;
-					}
-					else
-					{
-						this._borrow_id = default(string);
-					}
-					this.SendPropertyChanged("borrow_transaction");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="payment_fine", Storage="_payment", ThisKey="payment_id", OtherKey="payment_id", IsForeignKey=true)]
 		public payment payment
 		{
@@ -3451,6 +3125,40 @@ namespace IntegrativeProgramming_UI
 						this._payment_id = default(string);
 					}
 					this.SendPropertyChanged("payment");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="borrow_transaction_fine", Storage="_borrow_transaction", ThisKey="borrow_id", OtherKey="borrow_id", IsForeignKey=true)]
+		public borrow_transaction borrow_transaction
+		{
+			get
+			{
+				return this._borrow_transaction.Entity;
+			}
+			set
+			{
+				borrow_transaction previousValue = this._borrow_transaction.Entity;
+				if (((previousValue != value) 
+							|| (this._borrow_transaction.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._borrow_transaction.Entity = null;
+						previousValue.fines.Remove(this);
+					}
+					this._borrow_transaction.Entity = value;
+					if ((value != null))
+					{
+						value.fines.Add(this);
+						this._borrow_id = value.borrow_id;
+					}
+					else
+					{
+						this._borrow_id = default(string);
+					}
+					this.SendPropertyChanged("borrow_transaction");
 				}
 			}
 		}
@@ -3659,6 +3367,298 @@ namespace IntegrativeProgramming_UI
 		{
 			this.SendPropertyChanging();
 			entity.payment = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="NorthvilleLibrary.borrow_transaction")]
+	public partial class borrow_transaction : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _borrow_id;
+		
+		private string _student_id;
+		
+		private string _book_copy_id;
+		
+		private System.DateTime _borrow_date;
+		
+		private System.Nullable<System.DateTime> _return_date;
+		
+		private string _borrow_status;
+		
+		private EntitySet<fine> _fines;
+		
+		private EntityRef<book_copy> _book_copy;
+		
+		private EntityRef<student> _student;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onborrow_idChanging(string value);
+    partial void Onborrow_idChanged();
+    partial void Onstudent_idChanging(string value);
+    partial void Onstudent_idChanged();
+    partial void Onbook_copy_idChanging(string value);
+    partial void Onbook_copy_idChanged();
+    partial void Onborrow_dateChanging(System.DateTime value);
+    partial void Onborrow_dateChanged();
+    partial void Onreturn_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onreturn_dateChanged();
+    partial void Onborrow_statusChanging(string value);
+    partial void Onborrow_statusChanged();
+    #endregion
+		
+		public borrow_transaction()
+		{
+			this._fines = new EntitySet<fine>(new Action<fine>(this.attach_fines), new Action<fine>(this.detach_fines));
+			this._book_copy = default(EntityRef<book_copy>);
+			this._student = default(EntityRef<student>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_id", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string borrow_id
+		{
+			get
+			{
+				return this._borrow_id;
+			}
+			set
+			{
+				if ((this._borrow_id != value))
+				{
+					this.Onborrow_idChanging(value);
+					this.SendPropertyChanging();
+					this._borrow_id = value;
+					this.SendPropertyChanged("borrow_id");
+					this.Onborrow_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_student_id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string student_id
+		{
+			get
+			{
+				return this._student_id;
+			}
+			set
+			{
+				if ((this._student_id != value))
+				{
+					if (this._student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onstudent_idChanging(value);
+					this.SendPropertyChanging();
+					this._student_id = value;
+					this.SendPropertyChanged("student_id");
+					this.Onstudent_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_copy_id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string book_copy_id
+		{
+			get
+			{
+				return this._book_copy_id;
+			}
+			set
+			{
+				if ((this._book_copy_id != value))
+				{
+					if (this._book_copy.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onbook_copy_idChanging(value);
+					this.SendPropertyChanging();
+					this._book_copy_id = value;
+					this.SendPropertyChanged("book_copy_id");
+					this.Onbook_copy_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_date", DbType="Date NOT NULL")]
+		public System.DateTime borrow_date
+		{
+			get
+			{
+				return this._borrow_date;
+			}
+			set
+			{
+				if ((this._borrow_date != value))
+				{
+					this.Onborrow_dateChanging(value);
+					this.SendPropertyChanging();
+					this._borrow_date = value;
+					this.SendPropertyChanged("borrow_date");
+					this.Onborrow_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_return_date", DbType="Date")]
+		public System.Nullable<System.DateTime> return_date
+		{
+			get
+			{
+				return this._return_date;
+			}
+			set
+			{
+				if ((this._return_date != value))
+				{
+					this.Onreturn_dateChanging(value);
+					this.SendPropertyChanging();
+					this._return_date = value;
+					this.SendPropertyChanged("return_date");
+					this.Onreturn_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borrow_status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string borrow_status
+		{
+			get
+			{
+				return this._borrow_status;
+			}
+			set
+			{
+				if ((this._borrow_status != value))
+				{
+					this.Onborrow_statusChanging(value);
+					this.SendPropertyChanging();
+					this._borrow_status = value;
+					this.SendPropertyChanged("borrow_status");
+					this.Onborrow_statusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="borrow_transaction_fine", Storage="_fines", ThisKey="borrow_id", OtherKey="borrow_id")]
+		public EntitySet<fine> fines
+		{
+			get
+			{
+				return this._fines;
+			}
+			set
+			{
+				this._fines.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="book_copy_borrow_transaction", Storage="_book_copy", ThisKey="book_copy_id", OtherKey="book_copy_id", IsForeignKey=true)]
+		public book_copy book_copy
+		{
+			get
+			{
+				return this._book_copy.Entity;
+			}
+			set
+			{
+				book_copy previousValue = this._book_copy.Entity;
+				if (((previousValue != value) 
+							|| (this._book_copy.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._book_copy.Entity = null;
+						previousValue.borrow_transactions.Remove(this);
+					}
+					this._book_copy.Entity = value;
+					if ((value != null))
+					{
+						value.borrow_transactions.Add(this);
+						this._book_copy_id = value.book_copy_id;
+					}
+					else
+					{
+						this._book_copy_id = default(string);
+					}
+					this.SendPropertyChanged("book_copy");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="student_borrow_transaction", Storage="_student", ThisKey="student_id", OtherKey="student_id", IsForeignKey=true)]
+		public student student
+		{
+			get
+			{
+				return this._student.Entity;
+			}
+			set
+			{
+				student previousValue = this._student.Entity;
+				if (((previousValue != value) 
+							|| (this._student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._student.Entity = null;
+						previousValue.borrow_transactions.Remove(this);
+					}
+					this._student.Entity = value;
+					if ((value != null))
+					{
+						value.borrow_transactions.Add(this);
+						this._student_id = value.student_id;
+					}
+					else
+					{
+						this._student_id = default(string);
+					}
+					this.SendPropertyChanged("student");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_fines(fine entity)
+		{
+			this.SendPropertyChanging();
+			entity.borrow_transaction = this;
+		}
+		
+		private void detach_fines(fine entity)
+		{
+			this.SendPropertyChanging();
+			entity.borrow_transaction = null;
 		}
 	}
 }

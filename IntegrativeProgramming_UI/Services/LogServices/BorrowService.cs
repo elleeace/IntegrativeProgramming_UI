@@ -1,4 +1,5 @@
-﻿using IntegrativeProgramming_UI.Models.Logs;
+﻿using IntegrativeProgramming_UI.Models;
+using IntegrativeProgramming_UI.Models.Logs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +36,10 @@ namespace IntegrativeProgramming_UI.Services
                 });
         }
 
+        public void EditBorrow(StackPanel formPanel, NorthvilleLibraryDataContext db, BorrowTransactionDisplay borrow, Action onSaved)
+        {
+            FormBuilder.BuildEditBorrowForm(formPanel, db, borrow.BorrowID, onSaved);
+        }
 
         public void HandleBorrow(StackPanel sp, Action onSuccess)
         {

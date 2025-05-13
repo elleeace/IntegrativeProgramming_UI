@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 
 
@@ -12,13 +13,13 @@ namespace IntegrativeProgramming_UI
     /// <summary>
     /// Interaction logic for LibrarianAdminView.xaml
     /// </summary>
-    public partial class LibrarianAdminView : Window
+    public partial class ClericalAssistantView : Window
     {
 
         // Define constants for panel widths
-        public readonly string _role = "Librarian";
         private string currentSection = "";
         private ViewReloader _viewReloader;
+        public readonly string _role = "Clerical Assistant";
 
         #region Service Instances
         BookCopyService BookCopyService = null;
@@ -36,11 +37,10 @@ namespace IntegrativeProgramming_UI
         NorthvilleLibraryDataContext db = new NorthvilleLibraryDataContext(Properties.Settings.Default.NorthvilleLibraryV2ConnectionString);
         private RoutedEventHandler[] previousHandlers = new RoutedEventHandler[4];
 
-        readonly string _username;
         private string currentViewKey = "";
 
 
-        public LibrarianAdminView(string username)
+        public ClericalAssistantView()
         {
             InitializeComponent();
             _viewReloader = new ViewReloader();
@@ -58,7 +58,7 @@ namespace IntegrativeProgramming_UI
 
             _actionBuilder = new MainActionsBuilder(this);
             LoadMainActions();
-            _username = username;
+
         }
 
 
@@ -69,53 +69,12 @@ namespace IntegrativeProgramming_UI
             _viewReloader.Register("Book Table", LoadBookTable);
             _viewReloader.Register("Overdue Books", LoadOverdueBooks);
             _viewReloader.Register("Fine Table", LoadFineTable);
-            _viewReloader.Register("User Table", LoadUserTable);
             _viewReloader.Register("Course Table", LoadCourseTable);
             _viewReloader.Register("Payment Table", LoadPaymentTable);
             _viewReloader.Register("Attendance Table", LoadAttendanceTable);
         }
 
-        private void OnEditClick(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var row = btn?.Tag;
-
-            if (row == null) return;
-
-            ShowFormPanel();
-            CRUDHelper.EditEntityByRow(row, currentViewKey, spFormFields, db, () =>
-            {
-                HideFormPanel(null, null);
-                _viewReloader.Reload(currentViewKey);
-            });
-
-        }
-
-
-
-        private void OnDeleteClick(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var row = btn?.Tag;
-
-            if (row == null) return;
-
-            var confirm = MessageBox.Show("Are you sure you want to delete this record?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (confirm != MessageBoxResult.Yes) return;
-
-            try
-            {
-                CRUDHelper.DeleteEntityByRow(row, currentViewKey, db);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-
-            _viewReloader.Reload(currentViewKey);
-        }
-
-
+       
 
         private void IdentifyKey(string key)
         {
@@ -150,8 +109,6 @@ namespace IntegrativeProgramming_UI
                 HideFormPanel(null, null);
                 _viewReloader.Reload(currentViewKey);
             });
-
-            LoadBorrowTransactions();
         }
 
         public void LoadBorrowTransactions()
@@ -180,28 +137,16 @@ namespace IntegrativeProgramming_UI
             IdentifyKey("Attendance Table");
             LoadAttendanceTable();
             AttendanceService.CreateAttendance(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    _viewReloader.Reload(currentViewKey);
-                });
+            {
+                HideFormPanel(null, null);
+                _viewReloader.Reload(currentViewKey);
+            });
 
         }
 
         private void LoadBookTable()
         {
             dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
-        }
-        public void OnAddBookClick(object sender, RoutedEventArgs e)
-        {
-            ShowFormPanel();
-            IdentifyKey("Book Table");
-            LoadBookTable();
-
-            BookCopyService.AddBook(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    _viewReloader.Reload(currentViewKey);
-                });
         }
 
         private void LoadOverdueBooks()
@@ -248,65 +193,28 @@ namespace IntegrativeProgramming_UI
 
         //MANAGE
 
-        private void LoadUserTable()
-        {
-            dgDataGrid.ItemsSource = UserService.LoadUserTable();
-        }
+      
 
-        public void OnAddUserClick(object sender, RoutedEventArgs e)
-        {
-            ShowFormPanel();
-
-            IdentifyKey("User Table");
-            LoadUserTable();
-
-            UserService.AddUser(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    _viewReloader.Reload(currentViewKey);
-                });
-        }
-
-
-        private void LoadStudentTable()
+        public void LoadStudentTable(object sender, RoutedEventArgs e)
         {
             IdentifyKey("Student Table");
             dgDataGrid.ItemsSource = StudentService.LoadStudentTable();
         }
 
-        public void OnAddStudentClick(object sender, RoutedEventArgs e)
+        public void LoadCourseTable()
         {
-            LoadStudentTable();
-            ShowFormPanel();
-
-            StudentService.AddStudent(spFormFields, () =>
-            {
-                MessageBox.Show("Student Successfully Added");
-                _viewReloader.Reload(currentViewKey);
-            });
-        }
-
-
-        private void LoadCourseTable()
-        {
+            IdentifyKey("Course Table");
             dgDataGrid.ItemsSource = CourseService.LoadCourseTable();
         }
-        public void OnAddCourseClick(object sender, RoutedEventArgs e)
+
+
+
+        public void LoadCourseTable(object sender, RoutedEventArgs e)
         {
-            ShowFormPanel();
-
             IdentifyKey("Course Table");
-            LoadCourseTable();
-
-            CourseService.CreateCourse(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    MessageBox.Show("Course successfully added!");
-                    _viewReloader.Reload(currentViewKey);
-                });
-
+            dgDataGrid.ItemsSource = CourseService.LoadCourseTable();
         }
-
+      
 
         #endregion
         #region SidePanels
@@ -396,7 +304,7 @@ namespace IntegrativeProgramming_UI
             IdentifyKey("Book Table");
             LoadMainActions();
             HideFormPanel(null, null);
-            //  dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
+          
         }
 
         private void btnLogs_Click(object sender, RoutedEventArgs e)
@@ -412,7 +320,7 @@ namespace IntegrativeProgramming_UI
             IdentifyKey("User Table");
             HideFormPanel(null, null);
             LoadMainActions();
-            dgDataGrid.ItemsSource = UserService.LoadUserTable();
+          
         }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)

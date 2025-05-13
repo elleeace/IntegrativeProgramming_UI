@@ -75,6 +75,12 @@ namespace IntegrativeProgramming_UI.Services
             FormBuilder.ShowAddBookForm(sp, db, onSucess);
         }
 
+        public void EditBookCopy(StackPanel formPanel, NorthvilleLibraryDataContext db, BookCopyDisplay copy, Action onSaved)
+        {
+            FormBuilder.BuildEditBookCopyForm(formPanel, db, copy.CopyID, onSaved);
+        }
+
+
         public void DeleteCopyCascade(string copyId)
         {
             var borrows = db.borrow_transactions.Where(b => b.book_copy_id == copyId).ToList();

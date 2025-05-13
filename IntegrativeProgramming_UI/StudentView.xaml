@@ -1,0 +1,238 @@
+﻿<Window x:Class="IntegrativeProgramming_UI.StudentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Student Portal" Height="800" Width="1200" 
+        Background="#f5f7fa" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!-- Top Navigation Button Style - Aligned with ClericalAssistantView button styling -->
+        <Style x:Key="TopNavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#2d3748"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" 
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#e2e8f0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Active Navigation Button Style - Using ClericalAssistant accent color -->
+        <Style x:Key="ActiveNavButtonStyle" BasedOn="{StaticResource TopNavButtonStyle}" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="BorderBrush" Value="#3182ce"/>
+            <Setter Property="Foreground" Value="#3182ce"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <!-- Card Style for Dashboard - Matching ClericalAssistant's styling -->
+        <Style x:Key="DashboardCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BorderBrush" Value="#e2e8f0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15"/>
+        </Style>
+
+        <Style x:Key="LogoutButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#e53e3e"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Action Button Style - From ClericalAssistant -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#2d3748"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#e2e8f0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DataGrid styling - Matching ClericalAssistant -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#e2e8f0"/>
+            <Setter Property="Foreground" Value="#4a5568"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Top Navigation Bar -->
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Background="White" Height="60" 
+                    BorderThickness="0,0,0,1" BorderBrush="#e2e8f0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- App Title/Logo -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                        <TextBlock Text="Northville Library" FontSize="16" FontWeight="Bold" 
+                                   Foreground="#2d3748" VerticalAlignment="Center" Margin="20"/>
+                    </StackPanel>
+
+                    <!-- Navigation Links -->
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                        <Button x:Name="btnHome" Content="Home" Style="{StaticResource ActiveNavButtonStyle}"/>
+                        <Button x:Name="btnMyRecords" Content="My Records" Style="{StaticResource TopNavButtonStyle}" Click="btnMyRecords_Click"/>
+                        <Button x:Name="btnAttendance" Content="Attendance" Style="{StaticResource TopNavButtonStyle}" Click="btnAttendance_Click"/>
+                    </StackPanel>
+
+                    <!-- User Profile with Logout -->
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" Margin="20,0">
+                        <Ellipse Width="36" Height="36" Fill="#cbd5e0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="tbStudentName" Text="John Student" Margin="10,0,10,0" 
+                                   VerticalAlignment="Center" Foreground="#2d3748" FontWeight="Medium"/>
+                        <Button x:Name="btnLogout" Content="Logout" Style="{StaticResource LogoutButtonStyle}" 
+                                Click="btnLogout_Click" Margin="0,0,20,0" Width="80" Height="38"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Top Section with Welcome and Stats -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Welcome Header -->
+                    <Border Margin="20" Grid.Column="0" Background="#f5f7fa" Padding="15,15">
+                        <StackPanel>
+                            <TextBlock Text="Welcome back," FontSize="18" FontWeight="Bold" 
+                                       Foreground="#2d3748"/>
+                            <TextBlock x:Name="tbWelcomeName" Text="John" FontSize="18" FontWeight="Bold" 
+                                       Foreground="#3182ce" Margin="0,-5,0,0"/>
+                            <TextBlock Text="Here's your current status" Foreground="#718096" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Status Cards -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20">
+                        <Border Style="{StaticResource DashboardCardStyle}" Width="200" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Books Borrowed" Foreground="#718096" FontSize="12"/>
+                                <TextBlock x:Name="txtBooksBorrowed" Text="0" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#2d3748" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource DashboardCardStyle}" Width="200" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Overdue Items" Foreground="#718096" FontSize="12"/>
+                                <TextBlock x:Name="txtOverdueItems" Text="0" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#2d3748" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource DashboardCardStyle}" Width="200" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Library Visits" Foreground="#718096" FontSize="12"/>
+                                <TextBlock x:Name="txtLibraryVisits" Text="0" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#2d3748" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Main DataGrid Area -->
+                <Border Grid.Row="1" Background="#ffffff" Margin="5" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
+                    <DataGrid x:Name="dgDataGrid"
+        AutoGenerateColumns="True"
+        HeadersVisibility="Column"
+        CanUserAddRows="False"
+        Background="#ffffff"
+        RowBackground="Transparent"
+        AlternatingRowBackground="#f7fafc"
+        Foreground="#2d3748"
+        GridLinesVisibility="None"
+        BorderThickness="0"
+        FontSize="10"
+        IsReadOnly="True"
+        HorizontalGridLinesBrush="Transparent"
+        VerticalGridLinesBrush="Transparent"
+        SelectedItem="{Binding SelectedItem}"
+        SelectionUnit="FullRow"
+        Margin="10,10,10,10">
+
+                        <!-- Style: Selected Row Color -->
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3182ce"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#e2e8f0"/>
+                        </DataGrid.Resources>
+
+                        <!-- Row Style: Background stays light, selected row changes -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Padding" Value="8" />
+                                <Setter Property="MinHeight" Value="35" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="SnapsToDevicePixels" Value="True" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#2d3748"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

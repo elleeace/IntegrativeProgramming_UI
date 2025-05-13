@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 19.5, 15.125" name="NorthvilleLibrary">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20.5, 11" name="NorthvilleLibrary">
   <DataContextMoniker Name="/NorthvilleLibraryDataContext" />
   <nestedChildShapes>
     <classShape Id="cca90136-e7ca-41a6-80a1-4cba0eafec79" absoluteBounds="11.75, 9.125, 2, 1.6801985950271288">
@@ -50,12 +50,6 @@
         <elementListCompartment Id="e5ffb633-3026-48ce-ac87-22a9768c3a77" absoluteBounds="6.265, 4.46, 1.9700000000000002, 0.69864910592635465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4b35d73a-8265-4b68-95b4-16abc96ab9de" absoluteBounds="11.75, 0.875, 2, 2.1017480841279026">
-      <DataClassMoniker Name="/NorthvilleLibraryDataContext/borrow_transaction" />
-      <nestedChildShapes>
-        <elementListCompartment Id="1d2f08c5-7ce2-4708-bc4e-e2f6b8bb46d6" absoluteBounds="11.765, 1.335, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="612ce1a4-1bc7-45e6-834d-56bf4bb60188" absoluteBounds="6.25, 9.375, 2, 1.2586491059263558">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/course" />
       <nestedChildShapes>
@@ -82,7 +76,7 @@
         <classShapeMoniker Id="1da97678-c9f0-45a9-a02e-7588dfdd3796" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.00432455296318); (3.5 : 2.00432455296318)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.00432455296318); (3.5 : 2.00432455296318)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/NorthvilleLibraryDataContext/book_genre/book_genre_book" />
       <nodes>
         <classShapeMoniker Id="45fd0e10-a330-4bdf-a29d-bd73a5b77662" />
@@ -103,25 +97,11 @@
         <classShapeMoniker Id="9bfa0c40-7a2e-42b2-b798-e5982b3247c6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11 : 1.96509929751356); (11.75 : 1.96509929751356)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/NorthvilleLibraryDataContext/book_copy/book_copy_borrow_transaction" />
-      <nodes>
-        <classShapeMoniker Id="9bfa0c40-7a2e-42b2-b798-e5982b3247c6" />
-        <classShapeMoniker Id="4b35d73a-8265-4b68-95b4-16abc96ab9de" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(11 : 9.96509929751356); (11.75 : 9.96509929751356)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/NorthvilleLibraryDataContext/student/student_attendance" />
       <nodes>
         <classShapeMoniker Id="cad62b10-6ad2-4ad3-b820-ae1015afafb9" />
         <classShapeMoniker Id="cca90136-e7ca-41a6-80a1-4cba0eafec79" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(11 : 9.125); (11.375 : 8.75); (12.75 : 8.75); (12.75 : 2.9767480841279)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/NorthvilleLibraryDataContext/student/student_borrow_transaction" />
-      <nodes>
-        <classShapeMoniker Id="cad62b10-6ad2-4ad3-b820-ae1015afafb9" />
-        <classShapeMoniker Id="4b35d73a-8265-4b68-95b4-16abc96ab9de" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(8.25 : 10.0043245529632); (9 : 10.0043245529632)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -131,10 +111,10 @@
         <classShapeMoniker Id="cad62b10-6ad2-4ad3-b820-ae1015afafb9" />
       </nodes>
     </associationConnector>
-    <classShape Id="ae508de3-0026-43b2-a45a-7e2ebf775e65" absoluteBounds="5.375, 12.5, 2, 2.31252282867829">
+    <classShape Id="ae508de3-0026-43b2-a45a-7e2ebf775e65" absoluteBounds="18.25, 4.75, 2, 2.31252282867829">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_AvailableBook" />
       <nestedChildShapes>
-        <elementListCompartment Id="7e4f6445-e1f6-42a4-8ab0-b52e8b99b3fc" absoluteBounds="5.3900000000000006, 12.96, 1.9700000000000002, 1.75252282867829" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7e4f6445-e1f6-42a4-8ab0-b52e8b99b3fc" absoluteBounds="18.265, 5.2100000000000009, 1.9700000000000002, 1.75252282867829" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="59cf573b-9f99-4a99-aace-d0aacb5e1c57" absoluteBounds="9.75, 3.75, 2, 1.8909733395775152">
@@ -143,16 +123,16 @@
         <elementListCompartment Id="f074ecfc-51d1-4800-b926-877ad6169fbc" absoluteBounds="9.765, 4.21, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="825a8014-aee8-4c2d-97c2-6147a34c1ecb" absoluteBounds="0.875, 12.625, 2, 2.1017480841279017">
+    <classShape Id="825a8014-aee8-4c2d-97c2-6147a34c1ecb" absoluteBounds="13.75, 4.875, 2, 2.1017480841279017">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_fines_report" />
       <nestedChildShapes>
-        <elementListCompartment Id="a8c85edd-83e2-43b3-b5b3-cbbed4dcd8c1" absoluteBounds="0.89, 13.085, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a8c85edd-83e2-43b3-b5b3-cbbed4dcd8c1" absoluteBounds="13.765, 5.3350000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9f39abe3-ffd8-4791-85a5-a39c09f6da7b" absoluteBounds="3.125, 12.5, 2, 2.1017480841279017">
+    <classShape Id="9f39abe3-ffd8-4791-85a5-a39c09f6da7b" absoluteBounds="16, 4.75, 2, 2.1017480841279017">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_StudentBorrowHistory" />
       <nestedChildShapes>
-        <elementListCompartment Id="7479d7ba-4f3d-4a9b-9f39-beb5982a4ccd" absoluteBounds="3.14, 12.96, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7479d7ba-4f3d-4a9b-9f39-beb5982a4ccd" absoluteBounds="16.015, 5.2100000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="d403e280-dad0-4b91-a88d-ee1b36b3bb56" absoluteBounds="4, 3.875, 2, 3.7879460405309988">
@@ -167,24 +147,44 @@
         <elementListCompartment Id="5606ea50-dc99-411d-9b14-d9c8b40f961f" absoluteBounds="14.39, 1.71, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(13.75 : 2.11337404206395); (14.375 : 2.11337404206395)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/NorthvilleLibraryDataContext/borrow_transaction/borrow_transaction_fine" />
-      <nodes>
-        <classShapeMoniker Id="4b35d73a-8265-4b68-95b4-16abc96ab9de" />
-        <classShapeMoniker Id="bb7a0b85-a5fc-4df4-b1f7-9da429c3d37a" />
-      </nodes>
-    </associationConnector>
     <classShape Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" absoluteBounds="17.25, 1.875, 2, 1.8909733395775157">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/payment" />
       <nestedChildShapes>
         <elementListCompartment Id="b67aff4c-f551-41cb-a93d-cb5f9e61bc2b" absoluteBounds="17.265, 2.335, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(17.25 : 2.61337404206395); (16.375 : 2.61337404206395)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(17.25 : 2.61337404206395); (16.375 : 2.61337404206395)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/NorthvilleLibraryDataContext/payment/payment_fine" />
       <nodes>
         <classShapeMoniker Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" />
         <classShapeMoniker Id="bb7a0b85-a5fc-4df4-b1f7-9da429c3d37a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1862d5cc-1845-4bf6-b6f1-9cb3c0fcb0e9" absoluteBounds="11.75, 0.875, 2, 2.101748084127903">
+      <DataClassMoniker Name="/NorthvilleLibraryDataContext/borrow_transaction" />
+      <nestedChildShapes>
+        <elementListCompartment Id="95ac0892-f0c8-4325-add4-8df606c8de78" absoluteBounds="11.765, 1.335, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(13.75 : 2.11337404206395); (14.375 : 2.11337404206395)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/NorthvilleLibraryDataContext/borrow_transaction/borrow_transaction_fine" />
+      <nodes>
+        <classShapeMoniker Id="1862d5cc-1845-4bf6-b6f1-9cb3c0fcb0e9" />
+        <classShapeMoniker Id="bb7a0b85-a5fc-4df4-b1f7-9da429c3d37a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 1.96509929751356); (11.75 : 1.96509929751356)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/NorthvilleLibraryDataContext/book_copy/book_copy_borrow_transaction" />
+      <nodes>
+        <classShapeMoniker Id="9bfa0c40-7a2e-42b2-b798-e5982b3247c6" />
+        <classShapeMoniker Id="1862d5cc-1845-4bf6-b6f1-9cb3c0fcb0e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 9.125); (11.375 : 8.75); (12.75 : 8.75); (12.75 : 2.9767480841279)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/NorthvilleLibraryDataContext/student/student_borrow_transaction" />
+      <nodes>
+        <classShapeMoniker Id="cad62b10-6ad2-4ad3-b820-ae1015afafb9" />
+        <classShapeMoniker Id="1862d5cc-1845-4bf6-b6f1-9cb3c0fcb0e9" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

@@ -19,6 +19,10 @@ namespace IntegrativeProgramming_UI.Services
             this.db = db;
         }
 
+        public void EditCourse(StackPanel formPanel, NorthvilleLibraryDataContext db, Course course, Action onSaved)
+        {
+            FormBuilder.BuildEditCourseForm(formPanel, db, course.CourseID, onSaved);
+        }
         public void CreateCourse(StackPanel sp, Action onSucess)
         {
             FormBuilder.BuildAddCourseForm(sp, db, onSucess);

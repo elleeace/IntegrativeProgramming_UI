@@ -3,163 +3,214 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IntegrativeProgramming_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1000" Width="1500" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="600"/>
-        </Grid.ColumnDefinitions>
+        Title="Northville University Library System" 
+        Height="700" Width="1100" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True">
 
-        <!--LEFT GRID FOR DISPLAY-->
-        <Grid Grid.Column="0" Background="#292d37">
-            <Grid Margin="150">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="250"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+    <Window.Resources>
+        <!-- Light Theme Colors -->
+        <Color x:Key="LightBackground">#f5f7fa</Color>
+        <Color x:Key="LightPanel">#ffffff</Color>
+        <Color x:Key="LightText">#2d3748</Color>
+        <Color x:Key="LightAccent">#26ad7c</Color>
+        <Color x:Key="LightSecondary">#e2e8f0</Color>
 
-                <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
-                    <TextBlock Grid.Row="0" Text="Northville University"
-                       FontSize="55" Foreground="White" VerticalAlignment="Center"
-                           FontWeight="Bold" FontFamily="Inter"/>
+        <!-- Dark Theme Colors -->
+        <Color x:Key="DarkBackground">#292d37</Color>
+        <Color x:Key="DarkPanel">#1a202c</Color>
+        <Color x:Key="DarkText">#f7fafc</Color>
+        <Color x:Key="DarkAccent">#38b2ac</Color>
+        <Color x:Key="DarkSecondary">#4a5568</Color>
 
-                    <TextBlock Grid.Row="0" Text="Library System"
-                         FontSize="35" Foreground="White" VerticalAlignment="Center"
-                             FontWeight="Light" FontFamily="Inter"/>
-                </StackPanel>
+        <!-- Dynamic Brushes -->
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource LightBackground}"/>
+        <SolidColorBrush x:Key="PanelBrush" Color="{DynamicResource LightPanel}"/>
+        <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource LightText}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource LightAccent}"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource LightSecondary}"/>
 
-                <StackPanel Grid.Row="1" Orientation="Vertical">
-                    <Grid Height="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+        <!-- Styles -->
+        <Style x:Key="LoginButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Inter"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <Ellipse Grid.Column="0" Margin="15" Fill="White"/>
-                        <Label Grid.Column="1" Content="Create" FontSize="25"
-                               Foreground="White" FontFamily="Inter"
-                               VerticalAlignment="Center" Margin="20,0,0,0"/>
-                    </Grid>
+        <Style x:Key="InputFieldStyle" TargetType="Grid">
+            <Setter Property="Background" Value="{DynamicResource PanelBrush}"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Height" Value="70"/>
+        </Style>
 
-                    <Grid Height="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+        <Style x:Key="InputLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="FontFamily" Value="Inter"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
 
-                        <Ellipse Grid.Column="0" Margin="15" Fill="White"/>
-                        <Label Grid.Column="1" Content="Read" FontSize="25"
-            Foreground="White" FontFamily="Inter"
-            VerticalAlignment="Center" Margin="20,0,0,0"/>
-                    </Grid>
+        <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="FontFamily" Value="Inter"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Resources>
 
-                    <Grid Height="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+    <Border Background="{DynamicResource BackgroundBrush}" CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
 
-                        <Ellipse Grid.Column="0" Margin="15" Fill="White"/>
-                        <Label Grid.Column="1" Content="Update" FontSize="25"
-            Foreground="White" FontFamily="Inter"
-            VerticalAlignment="Center" Margin="20,0,0,0"/>
-                    </Grid>
+            <!-- Left Panel (Branding) -->
+            <Border Grid.Column="0" Background="#292d37" 
+                    CornerRadius="10,0,0,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <Grid Height="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center" Margin="40">
+                        <TextBlock Text="Northville University" 
+                                   FontSize="36" FontWeight="Bold" 
+                                   Foreground="White" FontFamily="Inter"/>
+                        <TextBlock Text="Library System" 
+                                   FontSize="24" FontWeight="Light" 
+                                   Foreground="White" FontFamily="Inter" Margin="0,10,0,0"/>
 
-                        <Ellipse Grid.Column="0" Margin="15" Fill="White"/>
-                        <Label Grid.Column="1" Content="Delete" FontSize="25"
-Foreground="White" FontFamily="Inter"
-VerticalAlignment="Center" Margin="20,0,0,0"/>
-                    </Grid>
-                </StackPanel>
+                        <StackPanel Margin="0,40,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,15">
+                                <Ellipse Width="20" Height="20" Fill="White"/>
+                                <TextBlock Text="Create, Read, Update, Delete" 
+                                           Foreground="White" FontSize="16" 
+                                           Margin="15,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,15">
+                                <Ellipse Width="20" Height="20" Fill="White"/>
+                                <TextBlock Text="Student and Faculty Portal" 
+                                           Foreground="White" FontSize="16" 
+                                           Margin="15,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,15">
+                                <Ellipse Width="20" Height="20" Fill="White"/>
+                                <TextBlock Text="Real-time Data Management" 
+                                           Foreground="White" FontSize="16" 
+                                           Margin="15,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
 
-            </Grid>
-        </Grid>
-
-        <!--RIGHT GRID FOR LOGIN-->
-        <Grid Grid.Column="1" Background="#ebf1ff">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
-            </Grid.RowDefinitions>
-
-            <!--Login Header-->
-            <Grid Grid.Row="0" Margin="40">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Ellipse Grid.Column="0" Height="50" Fill="#292d37"/>
-                    <Label Grid.Column="1" Foreground="Black"
-                           Content="BSIT-2A" FontSize="25"
-                           Margin="5,0,0,0" FontWeight="DemiBold"
-                           VerticalAlignment="Center"/>
+                    <!-- Theme Toggle -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right" Margin="20">
+                        <TextBlock Text="Dark" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ToggleButton x:Name="ThemeToggle" Width="50" Height="25" 
+                                     VerticalAlignment="Center" Checked="ThemeToggle_Checked" 
+                                     Unchecked="ThemeToggle_Unchecked">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="{DynamicResource SecondaryBrush}" 
+                                            CornerRadius="12.5">
+                                        <Grid>
+                                            <Ellipse x:Name="ToggleKnob" Fill="White" 
+                                                     HorizontalAlignment="Left" 
+                                                     Width="25" Height="25" 
+                                                     Margin="0,0,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="ToggleKnob" Property="HorizontalAlignment" Value="Right"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <TextBlock Text="Light" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </StackPanel>
                 </Grid>
-                
-            </Grid>
+            </Border>
 
-            <!--Login Block-->
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition Height="100"/>
-                </Grid.RowDefinitions>
+            <!-- Right Panel (Login Form) -->
+            <Border Grid.Column="1" Background="{DynamicResource PanelBrush}" 
+                    CornerRadius="0,10,10,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Log In"
-                       FontFamily="Inter" FontSize="35" Margin="50,0,0,0"
-                       FontWeight="Bold" VerticalAlignment="Center"/>
+                    <!-- Header -->
+                    <StackPanel Grid.Row="0" Margin="30,40,30,20">
+                        <TextBlock Text="Welcome Back!" 
+                                   FontSize="28" FontWeight="Bold" 
+                                   Foreground="{DynamicResource TextBrush}" 
+                                   FontFamily="Inter"/>
+                        <TextBlock Text="Please login to continue" 
+                                   FontSize="16" 
+                                   Foreground="{DynamicResource TextBrush}" 
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
 
-                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="50" VerticalAlignment="Center">
-                    <Grid Height="100" Background="White">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                    <!-- Form -->
+                    <StackPanel Grid.Row="1" Margin="30,0,30,0" VerticalAlignment="Center" Height="370">
+                        <Grid Style="{StaticResource InputFieldStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Username" Style="{StaticResource InputLabelStyle}"/>
+                            <TextBox x:Name="tbUsername" Grid.Row="1" Style="{StaticResource InputTextBoxStyle}" 
+                                     Text="libHelena"/>
+                        </Grid>
 
-                        <Label Background="#ebf1ff" Grid.Row="0" Content="Username" FontFamily="Inter"
-                               FontSize="20" Margin="0,0,0,0"/>
+                        <Grid Style="{StaticResource InputFieldStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Password" Style="{StaticResource InputLabelStyle}"/>
+                            <TextBox x:Name="tbPassword" Grid.Row="1" 
+                                        FontFamily="Inter" FontSize="16" 
+                                        BorderThickness="0" Padding="10,5" 
+                                        Background="Transparent" 
+                                        Foreground="{DynamicResource TextBrush}"/>
+                        </Grid>
 
-                        <TextBox x:Name="tbUsername" Grid.Row="1" 
-                                   VerticalAlignment="Center" FontFamily="Inter"
-                           FontSize="20" Margin="5,0,0,0" Foreground="DarkGray" Height="44" Text="libHelena"/>
-                    </Grid>
+                        <Button x:Name="btnLogin" Content="Login" 
+                                Style="{StaticResource LoginButtonStyle}" 
+                                Margin="0,30,0,0" Height="50" Click="btnLogin_Click"/>
+                    </StackPanel>
 
-                    <Grid Height="100" Background="White">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Label Background="#ebf1ff" Grid.Row="0" Content="Password" FontFamily="Inter"
-            FontSize="20" Margin="0,0,0,0"/>
-
-                        <TextBox x:Name="tbPassword" Grid.Row="1" 
-                VerticalAlignment="Center" FontFamily="Inter"
-        FontSize="20" Margin="5,0,0,0" Foreground="DarkGray" Height="44" Text="hkg123"/>
-                    </Grid>
-                </StackPanel>
-
-                <Button x:Name="btnLogin" Grid.Row="2" VerticalAlignment="Center" Height="50"
-                        Width="500" Background="#26ad7c" Content="Login"
-                        Foreground="White" FontFamily="Inter" FontSize="20"
-                        FontWeight="DemiBold" Click="login_btn_Click"/>
-            </Grid>
+                    <!-- Footer -->
+                  
+                </Grid>
+            </Border>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

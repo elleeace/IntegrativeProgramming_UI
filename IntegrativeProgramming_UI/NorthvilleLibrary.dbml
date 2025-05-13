@@ -79,19 +79,6 @@
       <Association Name="book_status_book_copy" Member="book_copies" ThisKey="book_status_id" OtherKey="book_status_id" Type="book_copy" />
     </Type>
   </Table>
-  <Table Name="NorthvilleLibrary.borrow_transaction" Member="borrow_transactions">
-    <Type Name="borrow_transaction">
-      <Column Name="borrow_id" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="student_id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="book_copy_id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="borrow_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="return_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="borrow_status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="borrow_transaction_fine" Member="fines" ThisKey="borrow_id" OtherKey="borrow_id" Type="fine" />
-      <Association Name="book_copy_borrow_transaction" Member="book_copy" ThisKey="book_copy_id" OtherKey="book_copy_id" Type="book_copy" IsForeignKey="true" />
-      <Association Name="student_borrow_transaction" Member="student" ThisKey="student_id" OtherKey="student_id" Type="student" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="NorthvilleLibrary.course" Member="courses">
     <Type Name="course">
       <Column Name="course_id" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -176,8 +163,8 @@
       <Column Name="amount" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
       <Column Name="assessed_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="is_paid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="borrow_transaction_fine" Member="borrow_transaction" ThisKey="borrow_id" OtherKey="borrow_id" Type="borrow_transaction" IsForeignKey="true" />
       <Association Name="payment_fine" Member="payment" ThisKey="payment_id" OtherKey="payment_id" Type="payment" IsForeignKey="true" />
+      <Association Name="borrow_transaction_fine" Member="borrow_transaction" ThisKey="borrow_id" OtherKey="borrow_id" Type="borrow_transaction" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="NorthvilleLibrary.payment" Member="payments">
@@ -188,6 +175,19 @@
       <Column Name="payment_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="payment_amount" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
       <Association Name="payment_fine" Member="fines" ThisKey="payment_id" OtherKey="payment_id" Type="fine" />
+    </Type>
+  </Table>
+  <Table Name="NorthvilleLibrary.borrow_transaction" Member="borrow_transactions">
+    <Type Name="borrow_transaction">
+      <Column Name="borrow_id" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="student_id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="book_copy_id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="borrow_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="return_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="borrow_status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="borrow_transaction_fine" Member="fines" ThisKey="borrow_id" OtherKey="borrow_id" Type="fine" />
+      <Association Name="book_copy_borrow_transaction" Member="book_copy" ThisKey="book_copy_id" OtherKey="book_copy_id" Type="book_copy" IsForeignKey="true" />
+      <Association Name="student_borrow_transaction" Member="student" ThisKey="student_id" OtherKey="student_id" Type="student" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="NorthvilleLibrary.usp_AddUser" Method="usp_AddUser">

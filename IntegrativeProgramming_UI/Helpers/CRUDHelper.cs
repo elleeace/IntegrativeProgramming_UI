@@ -41,7 +41,7 @@ namespace IntegrativeProgramming_UI.Helpers
                     break;
 
                 case Student student:
-                    //new StudentService(db).DeleteStudent(student.StudentID);
+                    new StudentService(db).DeleteStudent(student.StudentID);
                     break;
 
                 case Course course:
@@ -67,22 +67,25 @@ namespace IntegrativeProgramming_UI.Helpers
             switch (row)
             {
                 case User user:
-                    UserService.EditUser(formPanel, db, user, onSaved);
+                    new UserService(db).EditUser(formPanel, db, user, onSaved);
                     break;
 
                 case Student student:
-                    FormBuilder.BuildEditStudentForm(formPanel, db, student.StudentID, onSaved);
+                    new StudentService(db).EditStudent(formPanel, db, student, onSaved);
                     break;
 
                 case Course course:
-                    FormBuilder.BuildEditCourseForm(formPanel, db, course.CourseID, onSaved);
+                    new CourseService(db).EditCourse(formPanel, db, course, onSaved);
                     break;
 
-                case BorrowTransactionModel borrowTransaction:
-                    FormBuilder.BuildEditBorrowForm(formPanel, db, borrowTransaction.BorrowID, onSaved); 
+                case BorrowTransactionDisplay borrowTransaction:
+                    new BorrowService(db).EditBorrow(formPanel, db, borrowTransaction, onSaved);
+                    break;
+                case BookCopyDisplay copy:
+                    new BookCopyService(db).EditBookCopy(formPanel, db, copy, onSaved);
                     break;
                 default:
-                    MessageBox.Show("No matching handler found for editing.");
+                    MessageBox.Show($"No matching handler found for editing. Object {row.ToString()}");
                     break;
             }
         }

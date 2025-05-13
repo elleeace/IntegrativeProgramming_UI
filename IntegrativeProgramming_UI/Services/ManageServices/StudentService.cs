@@ -1,4 +1,5 @@
-﻿using IntegrativeProgramming_UI.Models;
+﻿using IntegrativeProgramming_UI.Helpers;
+using IntegrativeProgramming_UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +24,12 @@ namespace IntegrativeProgramming_UI.Services
         {
             FormBuilder.BuildAddStudentForm(sp,db,onSuccess);
         }
+
+        public void EditStudent(StackPanel formPanel, NorthvilleLibraryDataContext db, Student student, Action onSaved)
+        {
+            FormBuilder.BuildEditStudentForm(formPanel, db, student.StudentID, onSaved);
+        }
+
         public ObservableCollection<Student> LoadStudentTable()
         {
             return new ObservableCollection<Student>(
@@ -36,17 +43,29 @@ namespace IntegrativeProgramming_UI.Services
         }
         public void DeleteStudent(string studentId)
         {
+            if (string.IsNullOrWhiteSpace(studentId))
+            {
+                MessageBox.Show("Could not find student ID " + studentId);
+                return;
+            }
+
             var student = db.students.FirstOrDefault(s => s.student_id == studentId);
             if (student != null)
             {
                 try
                 {
+                    MessageBox.Show("Deleting Student ID: " + studentId);
                     db.students.DeleteOnSubmit(student);
+                    CRUDHelper.SafeSubmit(db);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Could not find student ID " + studentId);
             }
         }
 
