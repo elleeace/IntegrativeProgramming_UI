@@ -2,8 +2,10 @@
 using IntegrativeProgramming_UI.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 
 
@@ -12,13 +14,13 @@ namespace IntegrativeProgramming_UI
     /// <summary>
     /// Interaction logic for LibrarianAdminView.xaml
     /// </summary>
-    public partial class LibrarianAdminView : Window
+    public partial class ClericalAssistantView : Window
     {
 
         // Define constants for panel widths
-        public readonly string _role = "Librarian";
         private string currentSection = "";
         private ViewReloader _viewReloader;
+        public readonly string _role = "Clerical Assistant";
 
         #region Service Instances
         BookCopyService BookCopyService = null;
@@ -40,7 +42,7 @@ namespace IntegrativeProgramming_UI
         private string currentViewKey = "";
 
 
-        public LibrarianAdminView(string username)
+        public ClericalAssistantView(string username)
         {
             InitializeComponent();
             _viewReloader = new ViewReloader();
@@ -58,6 +60,7 @@ namespace IntegrativeProgramming_UI
 
             _actionBuilder = new MainActionsBuilder(this);
             LoadMainActions();
+            LoadStatusCards();
             _username = username;
         }
 
@@ -69,59 +72,40 @@ namespace IntegrativeProgramming_UI
             _viewReloader.Register("Book Table", LoadBookTable);
             _viewReloader.Register("Overdue Books", LoadOverdueBooks);
             _viewReloader.Register("Fine Table", LoadFineTable);
-            _viewReloader.Register("User Table", LoadUserTable);
             _viewReloader.Register("Course Table", LoadCourseTable);
             _viewReloader.Register("Payment Table", LoadPaymentTable);
             _viewReloader.Register("Attendance Table", LoadAttendanceTable);
         }
 
-        private void OnEditClick(object sender, RoutedEventArgs e)
+        private void LoadStatusCards()
         {
-            var btn = sender as Button;
-            var row = btn?.Tag;
-
-            if (row == null) return;
-
-            ShowFormPanel();
-            CRUDHelper.EditEntityByRow(row, currentViewKey, spFormFields, db, () =>
-            {
-                HideFormPanel(null, null);
-                _viewReloader.Reload(currentViewKey);
-            });
-
-        }
-
-
-
-        private void OnDeleteClick(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var row = btn?.Tag;
-
-            if (row == null) return;
-
-            var confirm = MessageBox.Show("Are you sure you want to delete this record?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (confirm != MessageBoxResult.Yes) return;
-
             try
             {
-                CRUDHelper.DeleteEntityByRow(row, currentViewKey, db);
+
+                int totalVisits = db.vw_visit_logs.Count();
+                int booksBorrowed = db.borrow_transactions.Count();
+                int overdueBooks = db.borrow_transactions
+                    .ToList()
+                    .Count(b => b.return_date == null &&
+                                b.borrow_date.AddDays(7) < DateTime.Today);
+
+                tbVisitCount.Text = totalVisits.ToString();
+                tbBorrowCount.Text = booksBorrowed.ToString();
+                tbOverdueCount.Text = overdueBooks.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBoxBuilder.ShowError("Failed to load dashboard statistics.\n\nDetails: " + ex.Message);
             }
-
-            _viewReloader.Reload(currentViewKey);
         }
-
-
 
         private void IdentifyKey(string key)
         {
             tbTitle.Content = key;
             currentViewKey = key;
         }
+
+       
 
 
         #region MainActionHandlers
@@ -132,32 +116,54 @@ namespace IntegrativeProgramming_UI
             IdentifyKey("Available Books");
             ShowFormPanel();
             ShowAvailableBooks();
-            BorrowService.HandleBorrow(spFormFields, () =>
+
+            try
             {
-                HideFormPanel(null, null);
-                _viewReloader.Reload(currentViewKey);
-            });
+                BorrowService.HandleBorrow(spFormFields, () =>
+                {
+                    HideFormPanel(null, null);
+                    _viewReloader.Reload(currentViewKey);
+                    LoadStatusCards();
+                });
+                ShowAvailableBooks();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxBuilder.ShowError("Failed to initiate borrowing.\n\nDetails: " + ex.Message, "Borrow Error");
+            }
 
             ShowAvailableBooks();
         }
-
         public void OnReturnClick(object sender, RoutedEventArgs e)
         {
             ShowFormPanel();
             IdentifyKey("Borrow Transactions");
-            BorrowService.HandleReturn(spFormFields, () =>
-            {
-                HideFormPanel(null, null);
-                _viewReloader.Reload(currentViewKey);
-            });
 
-            LoadBorrowTransactions();
+            try
+            {
+                BorrowService.HandleReturn(spFormFields, () =>
+                {
+                    HideFormPanel(null, null);
+                    _viewReloader.Reload(currentViewKey);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBoxBuilder.ShowError("Failed to return item.\n\nDetails: " + ex.Message, "Return Error");
+            }
         }
 
         public void LoadBorrowTransactions()
         {
-            IdentifyKey("Borrow Transactions");
-            dgDataGrid.ItemsSource = BorrowService.LoadBorrowTransactions();
+            try
+            {
+                IdentifyKey("Borrow Transactions");
+                dgDataGrid.ItemsSource = BorrowService.LoadBorrowTransactions();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxBuilder.ShowError("Failed to load borrow transactions.\n\nDetails: " + ex.Message, "Load Error");
+            }
         }
 
         public void LoadBorrowTransactions(object sender, RoutedEventArgs e)
@@ -179,29 +185,24 @@ namespace IntegrativeProgramming_UI
             ShowFormPanel();
             IdentifyKey("Attendance Table");
             LoadAttendanceTable();
-            AttendanceService.CreateAttendance(spFormFields, () =>
+
+            try
+            {
+                AttendanceService.CreateAttendance(spFormFields, () =>
                 {
                     HideFormPanel(null, null);
                     _viewReloader.Reload(currentViewKey);
+                    LoadStatusCards();
                 });
-
+            }
+            catch (Exception ex)
+            {
+                MessageBoxBuilder.ShowError("Failed to mark attendance.\n\nDetails: " + ex.Message, "Attendance Error");
+            }
         }
-
         private void LoadBookTable()
         {
             dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
-        }
-        public void OnAddBookClick(object sender, RoutedEventArgs e)
-        {
-            ShowFormPanel();
-            IdentifyKey("Book Table");
-            LoadBookTable();
-
-            BookCopyService.AddBook(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    _viewReloader.Reload(currentViewKey);
-                });
         }
 
         private void LoadOverdueBooks()
@@ -224,8 +225,6 @@ namespace IntegrativeProgramming_UI
             ShowAvailableBooks();
         }
 
-        //TRANSACTOINS
-
         private void LoadPaymentTable()
         {
             dgDataGrid.ItemsSource = PaymentService.LoadPayment();
@@ -246,67 +245,27 @@ namespace IntegrativeProgramming_UI
             LoadFineTable();
         }
 
-        //MANAGE
-
-        private void LoadUserTable()
-        {
-            dgDataGrid.ItemsSource = UserService.LoadUserTable();
-        }
-
-        public void OnAddUserClick(object sender, RoutedEventArgs e)
-        {
-            ShowFormPanel();
-
-            IdentifyKey("User Table");
-            LoadUserTable();
-
-            UserService.AddUser(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    _viewReloader.Reload(currentViewKey);
-                });
-        }
-
-
-        private void LoadStudentTable()
+     
+        public void LoadStudentTable(object sender, RoutedEventArgs e)
         {
             IdentifyKey("Student Table");
             dgDataGrid.ItemsSource = StudentService.LoadStudentTable();
         }
 
-        public void OnAddStudentClick(object sender, RoutedEventArgs e)
+        public void LoadCourseTable()
         {
-            LoadStudentTable();
-            ShowFormPanel();
-
-            StudentService.AddStudent(spFormFields, () =>
-            {
-                MessageBox.Show("Student Successfully Added");
-                _viewReloader.Reload(currentViewKey);
-            });
-        }
-
-
-        private void LoadCourseTable()
-        {
+            IdentifyKey("Course Table");
             dgDataGrid.ItemsSource = CourseService.LoadCourseTable();
         }
-        public void OnAddCourseClick(object sender, RoutedEventArgs e)
+
+
+
+        public void LoadCourseTable(object sender, RoutedEventArgs e)
         {
-            ShowFormPanel();
-
             IdentifyKey("Course Table");
-            LoadCourseTable();
-
-            CourseService.CreateCourse(spFormFields, () =>
-                {
-                    HideFormPanel(null, null);
-                    MessageBox.Show("Course successfully added!");
-                    _viewReloader.Reload(currentViewKey);
-                });
-
+            dgDataGrid.ItemsSource = CourseService.LoadCourseTable();
         }
-
+      
 
         #endregion
         #region SidePanels
@@ -385,6 +344,7 @@ namespace IntegrativeProgramming_UI
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             currentSection = "Home";
+            tbPageTitle.Content = $"{currentSection}";
             LoadMainActions();
             HideFormPanel(null, null);
             LoadBorrowTransactions();
@@ -393,39 +353,44 @@ namespace IntegrativeProgramming_UI
         private void btnCatalog_Click(object sender, RoutedEventArgs e)
         {
             currentSection = "Catalog";
-            IdentifyKey("Book Table");
+            tbPageTitle.Content = $"{currentSection}";
             LoadMainActions();
+            LoadBookTable();
             HideFormPanel(null, null);
-            //  dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
         }
 
         private void btnLogs_Click(object sender, RoutedEventArgs e)
         {
             currentSection = "Logs";
+            tbPageTitle.Content = $"{currentSection}";
             HideFormPanel(null, null);
+            LoadAttendanceTable();
             LoadMainActions();
         }
 
         private void btnManage_Click(object sender, RoutedEventArgs e)
         {
             currentSection = "Manage";
+            tbPageTitle.Content = $"{currentSection}";
             IdentifyKey("User Table");
             HideFormPanel(null, null);
             LoadMainActions();
-            dgDataGrid.ItemsSource = UserService.LoadUserTable();
         }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
+            if (MessageBoxBuilder.ShowConfirm("Are you sure you want to log out?", "Confirm Logout") == MessageBoxResult.Yes)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Functionality not implemented yet.");
-        }
+
+
+
+
     }
 }
 

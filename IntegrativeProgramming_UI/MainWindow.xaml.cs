@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrativeProgramming_UI.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,26 +25,6 @@ namespace IntegrativeProgramming_UI
             InitializeComponent();
         }
 
-      
-        private void ThemeToggle_Checked(object sender, RoutedEventArgs e)
-        {
-            // Switch to Dark Theme
-            Resources["BackgroundBrush"] = new SolidColorBrush((Color)Resources["DarkBackground"]);
-            Resources["PanelBrush"] = new SolidColorBrush((Color)Resources["DarkPanel"]);
-            Resources["TextBrush"] = new SolidColorBrush((Color)Resources["DarkText"]);
-            Resources["AccentBrush"] = new SolidColorBrush((Color)Resources["DarkAccent"]);
-            Resources["SecondaryBrush"] = new SolidColorBrush((Color)Resources["DarkSecondary"]);
-        }
-
-        private void ThemeToggle_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // Switch to Light Theme
-            Resources["BackgroundBrush"] = new SolidColorBrush((Color)Resources["LightBackground"]);
-            Resources["PanelBrush"] = new SolidColorBrush((Color)Resources["LightPanel"]);
-            Resources["TextBrush"] = new SolidColorBrush((Color)Resources["LightText"]);
-            Resources["AccentBrush"] = new SolidColorBrush((Color)Resources["LightAccent"]);
-            Resources["SecondaryBrush"] = new SolidColorBrush((Color)Resources["LightSecondary"]);
-        }
         private string fetchingPassword()
         {
             string fetchedPassword = "";
@@ -63,7 +44,7 @@ namespace IntegrativeProgramming_UI
 
         private int comparingPassword(string fetchedPassword)
         {
-            if (tbPassword.Text == fetchedPassword)
+            if (tbPassword.Password == fetchedPassword)
             {
                 return 0;
             }
@@ -75,22 +56,22 @@ namespace IntegrativeProgramming_UI
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (tbUsername.Text == "" || tbPassword.Text == "")
+            if (string.IsNullOrWhiteSpace(tbUsername.Text) || string.IsNullOrWhiteSpace(tbPassword.Password))
             {
-                MessageBox.Show("Please enter username and password");
+                MessageBoxBuilder.ShowIncompleteInput("Username and Password");
                 return;
             }
 
-            else
+            if (comparingPassword(fetchingPassword()) == 0)
             {
-                if (comparingPassword(fetchingPassword()) == 0)
+                MessageBoxBuilder.ShowSuccess("Login Successful", "Welcome Back!");
+
+                var users = (from u in db.users
+                             where u.username == tbUsername.Text
+                             select u).FirstOrDefault();
+
+                if (users != null)
                 {
-                    MessageBox.Show("Login Successful", "Welcome Back!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-                    var users = (from u in db.users
-                                 where u.username == tbUsername.Text
-                                 select u).FirstOrDefault();
-
                     if (users.user_role == "Librarian")
                     {
                         LibrarianAdminView librarianAdminView = new LibrarianAdminView(tbUsername.Text);
@@ -99,7 +80,7 @@ namespace IntegrativeProgramming_UI
                     }
                     else if (users.user_role == "Clerical Assistant")
                     {
-                        ClericalAssistantView clericalAssistantView = new ClericalAssistantView();
+                        ClericalAssistantView clericalAssistantView = new ClericalAssistantView(tbUsername.Text);
                         clericalAssistantView.Show();
                         this.Close();
                     }
@@ -112,9 +93,14 @@ namespace IntegrativeProgramming_UI
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBoxBuilder.ShowNotFound("User");
                 }
             }
+            else
+            {
+                MessageBoxBuilder.ShowError("Invalid username or password", "Login Failed");
+            }
         }
+
     }
 }

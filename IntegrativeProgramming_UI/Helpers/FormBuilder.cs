@@ -106,7 +106,7 @@ namespace IntegrativeProgramming_UI
                     string.IsNullOrWhiteSpace(isbn) || string.IsNullOrWhiteSpace(format) ||
                     string.IsNullOrWhiteSpace(genreName) || string.IsNullOrWhiteSpace(locationId))
                 {
-                    MessageBox.Show("Please complete all fields.");
+                    MessageBoxBuilder.ShowWarning("Please complete all fields.");
                     return;
                 }
 
@@ -114,11 +114,14 @@ namespace IntegrativeProgramming_UI
                     !int.TryParse(fields["Publication Year"].Text, out int year) ||
                     !int.TryParse(fields["Number of Copies"].Text, out int copies))
                 {
-                    MessageBox.Show("Edition, Year, and Copies must be valid numbers.");
+                    MessageBoxBuilder.ShowWarning("Edition, Year, and Copies must be valid numbers.");
                     return;
                 }
 
-                var confirm = MessageBox.Show($"Are you sure you want to add {copies} book copy/copies?", "Confirm Add", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var confirm = MessageBoxBuilder.ShowConfirm(
+                    $"Are you sure you want to add {copies} book copy/copies?",
+                    "Confirm Add");
+
                 if (confirm != MessageBoxResult.Yes)
                     return;
 
@@ -129,14 +132,15 @@ namespace IntegrativeProgramming_UI
                     db.usp_AddNewBookWithCopies(
                         title, author, genreId.ToString(), format, isbn, edition, year, locationId, copies);
 
-                    MessageBox.Show("Book and copies successfully added.");
+                    MessageBoxBuilder.ShowSuccess("Book and copies successfully added.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBoxBuilder.ShowError("An error occurred while adding the book.\n\nDetails: " + ex.Message);
                 }
             };
+
 
             targetPanel.Children.Add(btn);
         }
@@ -163,7 +167,7 @@ namespace IntegrativeProgramming_UI
             {
                 if (string.IsNullOrWhiteSpace(txtCourseId.Text) || string.IsNullOrWhiteSpace(txtCourseName.Text))
                 {
-                    MessageBox.Show("Please fill in all fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
@@ -178,12 +182,12 @@ namespace IntegrativeProgramming_UI
                     db.courses.InsertOnSubmit(newCourse);
                     db.SubmitChanges();
 
-                    MessageBox.Show("Course successfully added.");
+                    MessageBoxBuilder.ShowSuccess("Course successfully added.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBoxBuilder.ShowError("An error occurred while adding the course.\n\nDetails: " + ex.Message);
                 }
             };
 
@@ -216,24 +220,25 @@ namespace IntegrativeProgramming_UI
 
                 if (string.IsNullOrWhiteSpace(studentId) || string.IsNullOrWhiteSpace(bookCopyId))
                 {
-                    MessageBox.Show("Please fill in both fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in both fields.");
                     return;
                 }
 
                 try
                 {
                     dbContext.usp_BorrowBook(studentId, bookCopyId);
-                    MessageBox.Show("Borrow successful!");
+                    MessageBoxBuilder.ShowSuccess("Borrow successful!");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}");
+                    MessageBoxBuilder.ShowError("An error occurred while borrowing the book.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
         public static void BuildReturnForm(StackPanel targetPanel, NorthvilleLibraryDataContext dbContext, Action onSuccess)
         {
@@ -265,24 +270,25 @@ namespace IntegrativeProgramming_UI
 
                 if (string.IsNullOrWhiteSpace(borrowId) || returnDate == null)
                 {
-                    MessageBox.Show("Please fill in all fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
                 try
                 {
                     dbContext.usp_ReturnBook(borrowId, returnDate.Value);
-                    MessageBox.Show("Return recorded successfully.");
+                    MessageBoxBuilder.ShowSuccess("Return recorded successfully.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}");
+                    MessageBoxBuilder.ShowError("An error occurred while recording the return.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
         public static void BuildAttendanceForm(StackPanel targetPanel, NorthvilleLibraryDataContext dbContext, Action onSuccess)
         {
@@ -322,30 +328,31 @@ namespace IntegrativeProgramming_UI
 
                 if (string.IsNullOrWhiteSpace(attendanceId) || string.IsNullOrWhiteSpace(studentId) || visitDate == null || string.IsNullOrWhiteSpace(timeInput))
                 {
-                    MessageBox.Show("Please fill in all fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
                 if (!TimeSpan.TryParse(timeInput, out TimeSpan visitTime))
                 {
-                    MessageBox.Show("Invalid time format. Use HH:mm (e.g., 14:30)");
+                    MessageBoxBuilder.ShowWarning("Invalid time format. Use HH:mm (e.g., 14:30)");
                     return;
                 }
 
                 try
                 {
                     dbContext.usp_RecordVisit(attendanceId, studentId, visitDate.Value, visitTime);
-                    MessageBox.Show("Attendance recorded.");
+                    MessageBoxBuilder.ShowSuccess("Attendance recorded.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}");
+                    MessageBoxBuilder.ShowError("An error occurred while recording attendance.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
         public static void BuildAddUserForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, Action onSuccess)
         {
@@ -394,17 +401,18 @@ namespace IntegrativeProgramming_UI
                         DateTime.Now
                     );
 
-                    MessageBox.Show("User successfully added.");
+                    MessageBoxBuilder.ShowSuccess("User successfully added.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBoxBuilder.ShowError("An error occurred while adding the user.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
         public static void BuildAddStudentForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, Action onSuccess)
         {
@@ -444,7 +452,7 @@ namespace IntegrativeProgramming_UI
                     string.IsNullOrWhiteSpace(txtContactNum.Text) ||
                     cbCourse.SelectedItem == null)
                 {
-                    MessageBox.Show("Please fill in all fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
@@ -456,7 +464,7 @@ namespace IntegrativeProgramming_UI
 
                     if (course == null)
                     {
-                        MessageBox.Show("Selected course not found.");
+                        MessageBoxBuilder.ShowError("Selected course not found.");
                         return;
                     }
 
@@ -471,17 +479,18 @@ namespace IntegrativeProgramming_UI
                     db.students.InsertOnSubmit(newStudent);
                     db.SubmitChanges();
 
-                    MessageBox.Show("Student successfully added.");
+                    MessageBoxBuilder.ShowSuccess("Student successfully added.");
                     onSuccess?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBoxBuilder.ShowError("An error occurred while adding the student.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
         public static void BuildEditBookCopyForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string copyId, Action onSaved)
         {
@@ -490,17 +499,37 @@ namespace IntegrativeProgramming_UI
             var copy = db.book_copies.FirstOrDefault(c => c.book_copy_id == copyId);
             if (copy == null)
             {
-                MessageBox.Show("Book copy not found.");
+                MessageBoxBuilder.ShowError("Book copy not found.");
                 return;
             }
 
-            // Copy ID (readonly)
+            var edition = copy.book_edition;
+            var book = edition.book;
+
+            // --- BOOK FIELDS ---
+            targetPanel.Children.Add(CreateLabel("Book Title"));
+            var txtTitle = CreateTextBox("txtTitle", book.book_title);
+            targetPanel.Children.Add(txtTitle);
+
+            targetPanel.Children.Add(CreateLabel("Author"));
+            var txtAuthor = CreateTextBox("txtAuthor", book.book_author);
+            targetPanel.Children.Add(txtAuthor);
+
+            // --- EDITION FIELDS ---
+            targetPanel.Children.Add(CreateLabel("Edition Number"));
+            var txtEdition = CreateTextBox("txtEdition", edition.edition_number.ToString());
+            targetPanel.Children.Add(txtEdition);
+
+            targetPanel.Children.Add(CreateLabel("Format"));
+            var txtFormat = CreateTextBox("txtFormat", edition.book_format);
+            targetPanel.Children.Add(txtFormat);
+
+            // --- BOOK COPY FIELDS ---
             targetPanel.Children.Add(CreateLabel("Copy ID"));
             var txtCopyId = CreateTextBox("txtCopyId", copy.book_copy_id);
             txtCopyId.IsEnabled = false;
             targetPanel.Children.Add(txtCopyId);
 
-            // Book Status dropdown
             var statusList = db.book_status.Select(s => new { s.book_status_id, s.status_description }).ToList();
             var cbStatus = new ComboBox
             {
@@ -517,7 +546,6 @@ namespace IntegrativeProgramming_UI
             targetPanel.Children.Add(CreateLabel("Book Status"));
             targetPanel.Children.Add(cbStatus);
 
-            // Location dropdown
             var cbLocation = CreateComboBox(
                 db.book_locations.Select(l => l.location_id),
                 copy.location_id
@@ -527,35 +555,59 @@ namespace IntegrativeProgramming_UI
 
             var btnUpdate = new Button
             {
-                Content = "Update Book Copy",
+                Content = "Update Book Copy + Info",
                 Margin = new Thickness(0, 10, 0, 0)
             };
 
             btnUpdate.Click += (s, e) =>
             {
-                if (cbStatus.SelectedValue == null || cbLocation.SelectedItem == null)
+                // Validate
+                if (string.IsNullOrWhiteSpace(txtTitle.Text) ||
+                    string.IsNullOrWhiteSpace(txtAuthor.Text) ||
+                    string.IsNullOrWhiteSpace(txtEdition.Text) ||
+                    string.IsNullOrWhiteSpace(txtFormat.Text) ||
+                    cbStatus.SelectedValue == null ||
+                    cbLocation.SelectedItem == null)
                 {
-                    MessageBox.Show("Please select both status and location.");
+                    MessageBoxBuilder.ShowWarning("Please complete all fields before saving.");
                     return;
                 }
 
+                if (!int.TryParse(txtEdition.Text, out int editionNum))
+                {
+                    MessageBoxBuilder.ShowWarning("Edition number must be a valid integer.");
+                    return;
+                }
+
+                var confirm = MessageBoxBuilder.ShowConfirm("This update will apply to ALL book copies linked to this edition.\n\nAre you sure you want to proceed?", "System-Wide Book Update");
+                if (confirm != MessageBoxResult.Yes)
+                    return;
+
                 try
                 {
+                    // Apply changes
+                    book.book_title = txtTitle.Text.Trim();
+                    book.book_author = txtAuthor.Text.Trim();
+                    edition.edition_number = editionNum;
+                    edition.book_format = txtFormat.Text.Trim();
                     copy.book_status_id = cbStatus.SelectedValue.ToString();
                     copy.location_id = cbLocation.SelectedItem.ToString();
+
                     db.SubmitChanges();
 
-                    MessageBox.Show("Book copy updated successfully.");
+                    MessageBoxBuilder.ShowSuccess("Book, edition, and copy information updated successfully.");
                     onSaved?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Update failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Update failed.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnUpdate);
         }
+
+
 
         #endregion
 
@@ -563,14 +615,13 @@ namespace IntegrativeProgramming_UI
 
         public static void BuildEditUserForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string userId, Action onSaved)
         {
-            
             targetPanel.Children.Clear();
 
             var user = db.users.FirstOrDefault(u => u.user_id == userId);
-            
+
             if (user == null)
             {
-                MessageBox.Show("User not found.");
+                MessageBoxBuilder.ShowError("User not found.");
                 return;
             }
 
@@ -610,7 +661,7 @@ namespace IntegrativeProgramming_UI
             {
                 if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text) || cbRole.SelectedItem == null)
                 {
-                    MessageBox.Show("Please complete all required fields.");
+                    MessageBoxBuilder.ShowWarning("Please complete all required fields.");
                     return;
                 }
 
@@ -622,17 +673,18 @@ namespace IntegrativeProgramming_UI
                 try
                 {
                     CRUDHelper.SafeSubmit(db);
-                    MessageBox.Show("User updated successfully.");
+                    MessageBoxBuilder.ShowSuccess("User updated successfully.");
                     onSaved?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error updating user: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Error updating user.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnUpdate);
         }
+
 
         public static void BuildEditStudentForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string studentId, Action onSaved)
         {
@@ -641,7 +693,7 @@ namespace IntegrativeProgramming_UI
             var student = db.students.FirstOrDefault(s => s.student_id == studentId);
             if (student == null)
             {
-                MessageBox.Show("Student not found.");
+                MessageBoxBuilder.ShowError("Student not found.");
                 return;
             }
 
@@ -689,7 +741,7 @@ namespace IntegrativeProgramming_UI
             {
                 if (string.IsNullOrWhiteSpace(txtStudentName.Text) || cbCourse.SelectedValue == null)
                 {
-                    MessageBox.Show("Please fill in all required fields.");
+                    MessageBoxBuilder.ShowWarning("Please fill in all required fields.");
                     return;
                 }
 
@@ -700,17 +752,18 @@ namespace IntegrativeProgramming_UI
                     student.course_id = cbCourse.SelectedValue.ToString();
 
                     db.SubmitChanges();
-                    MessageBox.Show("Student successfully updated.");
+                    MessageBoxBuilder.ShowSuccess("Student successfully updated.");
                     onSaved?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Update failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Update failed.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnSave);
         }
+
 
         public static void BuildEditCourseForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string courseId, Action onSaved)
         {
@@ -719,7 +772,7 @@ namespace IntegrativeProgramming_UI
             var course = db.courses.FirstOrDefault(c => c.course_id == courseId);
             if (course == null)
             {
-                MessageBox.Show("Course not found.");
+                MessageBoxBuilder.ShowError("Course not found.");
                 return;
             }
 
@@ -744,7 +797,7 @@ namespace IntegrativeProgramming_UI
             {
                 if (string.IsNullOrWhiteSpace(txtCourseName.Text))
                 {
-                    MessageBox.Show("Course name cannot be empty.");
+                    MessageBoxBuilder.ShowWarning("Course name cannot be empty.");
                     return;
                 }
 
@@ -752,12 +805,12 @@ namespace IntegrativeProgramming_UI
                 {
                     course.course_name = txtCourseName.Text;
                     db.SubmitChanges();
-                    MessageBox.Show("Course updated successfully.");
+                    MessageBoxBuilder.ShowSuccess("Course updated successfully.");
                     onSaved?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Update failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Update failed.\n\nDetails: " + ex.Message);
                 }
             };
 
@@ -771,7 +824,7 @@ namespace IntegrativeProgramming_UI
             var borrow = db.borrow_transactions.FirstOrDefault(b => b.borrow_id == borrowId);
             if (borrow == null)
             {
-                MessageBox.Show("Borrow transaction not found.");
+                MessageBoxBuilder.ShowError("Borrow transaction not found.");
                 return;
             }
 
@@ -811,7 +864,7 @@ namespace IntegrativeProgramming_UI
             {
                 if (string.IsNullOrWhiteSpace(txtStudentId.Text) || string.IsNullOrWhiteSpace(txtCopyId.Text))
                 {
-                    MessageBox.Show("All fields must be filled.");
+                    MessageBoxBuilder.ShowWarning("All fields must be filled.");
                     return;
                 }
 
@@ -823,17 +876,18 @@ namespace IntegrativeProgramming_UI
                     borrow.return_date = dpReturnDate.SelectedDate;
 
                     db.SubmitChanges();
-                    MessageBox.Show("Borrow record updated.");
+                    MessageBoxBuilder.ShowSuccess("Borrow record updated.");
                     onSaved?.Invoke();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Update failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Update failed.\n\nDetails: " + ex.Message);
                 }
             };
 
             targetPanel.Children.Add(btnUpdate);
         }
+
 
         #endregion
     }

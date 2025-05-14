@@ -1,4 +1,5 @@
-﻿using IntegrativeProgramming_UI.Models;
+﻿using IntegrativeProgramming_UI.Helpers;
+using IntegrativeProgramming_UI.Models;
 using IntegrativeProgramming_UI.Models.Catalog;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,22 @@ namespace IntegrativeProgramming_UI.Services
                      Status = copy.book_status.status_description,
                      Location = copy.book_location.room_name + ", " + copy.book_location.section_name
                  }).ToList());
+        }
+
+        public IEnumerable<object> LoadBorrowedBooks()
+        {
+            return (from bt in db.borrow_transactions
+                    where bt.borrow_status == "Borrowed"
+                    select new
+                    {
+                        BorrowID = bt.borrow_id,
+                        StudentID = bt.student_id,
+                        StudentName = bt.student.student_name,
+                        CopyID = bt.book_copy_id,
+                        BookTitle = bt.book_copy.book_edition.book.book_title,
+                        BorrowDate = bt.borrow_date,
+                        Location = bt.book_copy.book_location.room_name + ", " + bt.book_copy.book_location.section_name
+                    }).ToList();
         }
 
 
@@ -106,7 +123,7 @@ namespace IntegrativeProgramming_UI.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Delete failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Delete failed.\n\nDetails: " + ex.Message);
                 }
             }
         }

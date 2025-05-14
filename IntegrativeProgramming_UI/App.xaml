@@ -4,6 +4,19 @@
              xmlns:local="clr-namespace:IntegrativeProgramming_UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml" />
+                <ResourceDictionary Source="/Themes/LightTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource DarkBackground}" />
+            <SolidColorBrush x:Key="PanelBrush" Color="{StaticResource DarkPanel}" />
+            <SolidColorBrush x:Key="TextBrush" Color="{StaticResource DarkText}" />
+            <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource DarkAccent}" />
+            <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource DarkSecondary}" />
+        </ResourceDictionary>
+        
+        
     </Application.Resources>
 </Application>

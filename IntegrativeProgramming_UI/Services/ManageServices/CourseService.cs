@@ -1,4 +1,5 @@
-﻿using IntegrativeProgramming_UI.Models;
+﻿using IntegrativeProgramming_UI.Helpers;
+using IntegrativeProgramming_UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -55,11 +56,11 @@ namespace IntegrativeProgramming_UI.Services
                 try
                 {
                     db.SubmitChanges();
-                    MessageBox.Show("Record deleted successfully.");
+                    MessageBoxBuilder.ShowSuccess("Record deleted successfully.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Delete failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Delete failed.\n\nDetails: " + ex.Message);
                 }
             }
         }

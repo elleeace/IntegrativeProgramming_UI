@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntegrativeProgramming_UI"
         mc:Ignorable="d"
-        Title="ClericalAssistantView" Height="1000" Width="1500" Background="#f5f7fa" WindowStartupLocation="CenterScreen">
+        Title="ClericalAssistantView" Height="800" Width="1500" Background="#f5f7fa" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="SidebarButtonStyle" TargetType="Button">
@@ -119,7 +119,7 @@
             <!-- User Profile Section -->
             <StackPanel Grid.Row="1" Margin="10,20">
                 <Ellipse Width="80" Height="80" Fill="#cbd5e0" HorizontalAlignment="Center" />
-                <TextBlock Text="IbWelcomeUser" HorizontalAlignment="Center" Margin="0,10" Foreground="#2d3748" />
+                <TextBlock x:Name="lblWelcomeUser" Text="Welcome User" HorizontalAlignment="Center" Margin="0,10" Foreground="#2d3748" />
             </StackPanel>
 
             <!-- Navigation Menu -->
@@ -149,9 +149,12 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
+            <StackPanel Grid.Row="3">
+               
 
-            <!-- Logout Button -->
-            <Button x:Name="btnLogOut" Grid.Row="3" Style="{StaticResource AccentButtonStyle}" Margin="10,20" Content="Log out" Click="btnLogOut_Click" />
+                <!-- Logout Button -->
+                <Button x:Name="btnLogOut" Grid.Row="3" Style="{StaticResource AccentButtonStyle}" Margin="10,20" Content="Log out" Click="btnLogOut_Click" />
+            </StackPanel>
         </Grid>
 
         <!-- Collapsed Sidebar (icons only) -->
@@ -206,36 +209,18 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Search Section -->
-                <Border Grid.Row="0" Grid.Column="0" Background="#ffffff" Margin="5" Padding="15" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Grid.Row="0" Text="SEARCH" FontWeight="Bold" Foreground="#2d3748" Margin="0,0,0,10" />
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Background="#edf2f7" Foreground="#2d3748" BorderThickness="1" BorderBrush="#e2e8f0" Padding="10" />
-                            <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}" Margin="5,0,0,0" Click="btnSearch_Click">
-                                <Path Data="M15,15 L21,21 M10,17 A7,7 0 1 1 10,3 A7,7 0 0 1 10,17" Stroke="White" StrokeThickness="2" />
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Border>
+                <Label x:Name="tbPageTitle" Foreground="#2d3748" Grid.Row="0" Content="My Dashboard" 
+                       FontSize ="20" FontWeight="Bold" Margin="15" />
 
                 <!-- Summary Section -->
-                <Border Grid.Row="0" Grid.Column="1" Background="#ffffff" Margin="5" Padding="15" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
+                <Border Grid.Row="1" Grid.Column="1" Background="#ffffff" Margin="5" Padding="15" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -244,22 +229,22 @@
 
                         <TextBlock Grid.Row="0" Text="Summary" FontWeight="Bold" Foreground="#2d3748" Margin="0,0,0,10" />
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Border Background="#edf2f7" Width="125" Height="60" Margin="5" CornerRadius="3">
+                            <Border Background="#edf2f7" Width="125" Height="96" Margin="5" CornerRadius="3">
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
+                                    <TextBlock x:Name="tbVisitCount" Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
                                     <TextBlock Text="Visits" Foreground="#4a5568" HorizontalAlignment="Center" FontSize="10" />
                                 </StackPanel>
                             </Border>
-                            <Border Background="#edf2f7" Width="125" Height="60" Margin="5" CornerRadius="3">
+                            <Border Background="#edf2f7" Width="125" Height="96" Margin="5" CornerRadius="3">
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
-                                    <TextBlock Text="Visits" Foreground="#4a5568" HorizontalAlignment="Center" FontSize="10" />
+                                    <TextBlock x:Name="tbBorrowCount" Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
+                                    <TextBlock Text="Borrows" Foreground="#4a5568" HorizontalAlignment="Center" FontSize="10" />
                                 </StackPanel>
                             </Border>
-                            <Border Background="#edf2f7" Width="125" Height="60" Margin="5" CornerRadius="3">
+                            <Border Background="#edf2f7" Width="125" Height="96" Margin="5" CornerRadius="3">
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
-                                    <TextBlock Text="Visits" Foreground="#4a5568" HorizontalAlignment="Center" FontSize="10" />
+                                    <TextBlock x:Name="tbOverdueCount" Text="2" Foreground="#2d3748" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
+                                    <TextBlock Text="Overdue" Foreground="#4a5568" HorizontalAlignment="Center" FontSize="10" />
                                 </StackPanel>
                             </Border>
                         </StackPanel>
@@ -289,21 +274,6 @@
                             <Button x:Name="btnAction4" Style="{StaticResource ActionButtonStyle}" Margin="5" Width="185" Background="#f7fafc" BorderBrush="#3182ce" BorderThickness="0,0,0,3">
                                 <TextBlock x:Name="lblButtonAction4" Text="Button Label" Foreground="#3182ce" Margin="0,10,0,0" />
                             </Button>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- More Actions Section -->
-                <Border Grid.Row="1" Grid.Column="1" Background="#ffffff" Margin="5" Padding="15" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Grid.Row="0" Foreground="#2d3748" Text="More Actions" FontWeight="Bold" Margin="0,0,0,10" />
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <!-- Content for more actions -->
                         </StackPanel>
                     </Grid>
                 </Border>

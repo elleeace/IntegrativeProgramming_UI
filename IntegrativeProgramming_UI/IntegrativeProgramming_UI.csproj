@@ -56,12 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClericalAssistantView.xaml.cs">
+    <Compile Include="Views\ClericalAssistantView.xaml.cs">
       <DependentUpon>ClericalAssistantView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CRUDHelper.cs" />
     <Compile Include="Helpers\FormBuilder.cs" />
-    <Compile Include="LibrarianAdminView.xaml.cs">
+    <Compile Include="Helpers\MessageBoxBuilder.cs" />
+    <Compile Include="Views\LibrarianAdminView.xaml.cs">
       <DependentUpon>LibrarianAdminView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MainAction.cs" />
@@ -96,14 +97,22 @@
     <Compile Include="Services\ManageServices\UserService.cs" />
     <Compile Include="Helpers\UIConstants.cs" />
     <Compile Include="Helpers\ViewReloader.cs" />
-    <Compile Include="StudentView.xaml.cs">
+    <Compile Include="Views\StudentView.xaml.cs">
       <DependentUpon>StudentView.xaml</DependentUpon>
     </Compile>
-    <Page Include="ClericalAssistantView.xaml">
+    <Page Include="Themes\DarkTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LibrarianAdminView.xaml">
+    <Page Include="Themes\LightTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClericalAssistantView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LibrarianAdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,7 +128,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StudentView.xaml">
+    <Page Include="Views\StudentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

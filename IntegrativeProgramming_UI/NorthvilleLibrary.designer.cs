@@ -252,10 +252,10 @@ namespace IntegrativeProgramming_UI
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="NorthvilleLibrary.usp_ReturnBook")]
-		public int usp_ReturnBook([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string borrow_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> return_date)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="NorthvilleLibrary.usp_AddNewBookWithCopies")]
+		public int usp_AddNewBookWithCopies([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string book_title, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string book_author, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string book_genre_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string book_format, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(20)")] string isbn, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> edition_number, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> publication_year, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string location_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> number_of_copies)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), borrow_id, return_date);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), book_title, book_author, book_genre_id, book_format, isbn, edition_number, publication_year, location_id, number_of_copies);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -266,10 +266,10 @@ namespace IntegrativeProgramming_UI
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="NorthvilleLibrary.usp_PayFine")]
-		public int usp_PayFine([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string student_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string fine_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(10,2)")] System.Nullable<decimal> payment_amount, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string payment_desc)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="NorthvilleLibrary.usp_ReturnBook")]
+		public int usp_ReturnBook([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string borrow_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> return_date)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), student_id, fine_id, payment_amount, payment_desc);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), borrow_id, return_date);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -277,13 +277,6 @@ namespace IntegrativeProgramming_UI
 		public int usp_RecordVisit([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string attendance_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string student_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date_of_visit, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Time")] System.Nullable<System.TimeSpan> time_of_visit)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), attendance_id, student_id, date_of_visit, time_of_visit);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="NorthvilleLibrary.usp_AddNewBookWithCopies")]
-		public int usp_AddNewBookWithCopies([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string book_title, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string book_author, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string book_genre_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string book_format, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(20)")] string isbn, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> edition_number, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> publication_year, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string location_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> number_of_copies)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), book_title, book_author, book_genre_id, book_format, isbn, edition_number, publication_year, location_id, number_of_copies);
 			return ((int)(result.ReturnValue));
 		}
 	}

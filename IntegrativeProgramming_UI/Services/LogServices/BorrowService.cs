@@ -1,4 +1,5 @@
-﻿using IntegrativeProgramming_UI.Models;
+﻿using IntegrativeProgramming_UI.Helpers;
+using IntegrativeProgramming_UI.Models;
 using IntegrativeProgramming_UI.Models.Logs;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace IntegrativeProgramming_UI.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Delete failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Delete failed.\n\nDetails: " + ex.Message);
                 }
             }
 
@@ -78,7 +79,7 @@ namespace IntegrativeProgramming_UI.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Delete failed: " + ex.Message);
+                    MessageBoxBuilder.ShowError("Delete failed.\n\nDetails: " + ex.Message);
                 }
             }
         }

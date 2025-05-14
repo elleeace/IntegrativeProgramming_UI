@@ -40,13 +40,13 @@ namespace IntegrativeProgramming_UI.Services
             var payment = db.payments.FirstOrDefault(p => p.payment_id == paymentId);
             if (payment == null)
             {
-                MessageBox.Show("Payment not found.");
+                MessageBoxBuilder.ShowNotFound("Payment not found.");
                 return;
             }
 
             db.payments.DeleteOnSubmit(payment);
-            CRUDHelper.SafeSubmit(db); // Centralized safe submit with error handling
-            MessageBox.Show("Payment successfully deleted");
+            CRUDHelper.SafeSubmit(db); 
+            MessageBoxBuilder.ShowSuccess("Payment successfully deleted");
         }
 
     }

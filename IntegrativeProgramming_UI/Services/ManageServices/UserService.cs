@@ -56,7 +56,7 @@ namespace IntegrativeProgramming_UI.Services
             var user = db.users.FirstOrDefault(u => u.user_id == userId);
             if (user == null)
             {
-                MessageBox.Show("User not found.");
+                MessageBoxBuilder.ShowError("User not found.");
                 return;
             }
 

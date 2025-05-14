@@ -201,30 +201,6 @@
     <Parameter Name="created_at" Type="System.DateTime" DbType="DateTime" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="NorthvilleLibrary.usp_ReturnBook" Method="usp_ReturnBook">
-    <Parameter Name="borrow_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="return_date" Type="System.DateTime" DbType="Date" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="NorthvilleLibrary.usp_BorrowBook" Method="usp_BorrowBook">
-    <Parameter Name="student_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="book_copy_id" Type="System.String" DbType="VarChar(10)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="NorthvilleLibrary.usp_PayFine" Method="usp_PayFine">
-    <Parameter Name="student_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="fine_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="payment_amount" Type="System.Decimal" DbType="Decimal(10,2)" />
-    <Parameter Name="payment_desc" Type="System.String" DbType="VarChar(100)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="NorthvilleLibrary.usp_RecordVisit" Method="usp_RecordVisit">
-    <Parameter Name="attendance_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="student_id" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="date_of_visit" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="time_of_visit" Type="System.TimeSpan" DbType="Time" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="NorthvilleLibrary.usp_AddNewBookWithCopies" Method="usp_AddNewBookWithCopies">
     <Parameter Name="book_title" Type="System.String" DbType="VarChar(100)" />
     <Parameter Name="book_author" Type="System.String" DbType="VarChar(100)" />
@@ -235,6 +211,23 @@
     <Parameter Name="publication_year" Type="System.Int32" DbType="Int" />
     <Parameter Name="location_id" Type="System.String" DbType="VarChar(10)" />
     <Parameter Name="number_of_copies" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="NorthvilleLibrary.usp_BorrowBook" Method="usp_BorrowBook">
+    <Parameter Name="student_id" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="book_copy_id" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="NorthvilleLibrary.usp_ReturnBook" Method="usp_ReturnBook">
+    <Parameter Name="borrow_id" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="return_date" Type="System.DateTime" DbType="Date" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="NorthvilleLibrary.usp_RecordVisit" Method="usp_RecordVisit">
+    <Parameter Name="attendance_id" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="student_id" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="date_of_visit" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="time_of_visit" Type="System.TimeSpan" DbType="Time" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

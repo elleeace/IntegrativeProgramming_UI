@@ -1,11 +1,8 @@
 ﻿using IntegrativeProgramming_UI.Helpers;
 using IntegrativeProgramming_UI.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,7 +19,7 @@ namespace IntegrativeProgramming_UI.Services
 
         public void AddStudent(StackPanel sp, Action onSuccess)
         {
-            FormBuilder.BuildAddStudentForm(sp,db,onSuccess);
+            FormBuilder.BuildAddStudentForm(sp, db, onSuccess);
         }
 
         public void EditStudent(StackPanel formPanel, NorthvilleLibraryDataContext db, Student student, Action onSaved)
@@ -45,27 +42,36 @@ namespace IntegrativeProgramming_UI.Services
         {
             if (string.IsNullOrWhiteSpace(studentId))
             {
-                MessageBox.Show("Could not find student ID " + studentId);
+                MessageBoxBuilder.ShowError("Could not find student ID " + studentId);
                 return;
             }
 
             var student = db.students.FirstOrDefault(s => s.student_id == studentId);
             if (student != null)
             {
-                try
+                var confirm = MessageBoxBuilder.ShowConfirm("Are you sure you want to delete Student ID: " + studentId + "?");
+
+                if (confirm == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Deleting Student ID: " + studentId);
-                    db.students.DeleteOnSubmit(student);
-                    CRUDHelper.SafeSubmit(db);
+                    try
+                    {
+                        db.students.DeleteOnSubmit(student);
+                        CRUDHelper.SafeSubmit(db);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    MessageBox.Show(e.Message);
+                    return;
                 }
+
             }
             else
             {
-                MessageBox.Show("Could not find student ID " + studentId);
+                MessageBoxBuilder.ShowNotFound("Could not find student ID " + studentId);
             }
         }
 
