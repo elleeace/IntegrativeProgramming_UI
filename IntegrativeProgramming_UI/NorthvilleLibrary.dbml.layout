@@ -117,10 +117,10 @@
         <elementListCompartment Id="7e4f6445-e1f6-42a4-8ab0-b52e8b99b3fc" absoluteBounds="18.265, 5.3350000000000009, 1.9700000000000002, 1.75252282867829" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="59cf573b-9f99-4a99-aace-d0aacb5e1c57" absoluteBounds="9.75, 3.75, 2, 1.8909733395775152">
+    <classShape Id="59cf573b-9f99-4a99-aace-d0aacb5e1c57" absoluteBounds="14.125, 7.125, 2, 1.8909733395775152">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_visit_log" />
       <nestedChildShapes>
-        <elementListCompartment Id="f074ecfc-51d1-4800-b926-877ad6169fbc" absoluteBounds="9.765, 4.21, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f074ecfc-51d1-4800-b926-877ad6169fbc" absoluteBounds="14.14, 7.585, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="825a8014-aee8-4c2d-97c2-6147a34c1ecb" absoluteBounds="13.625, 4.875, 2, 2.1017480841279017">
@@ -153,7 +153,7 @@
         <elementListCompartment Id="b67aff4c-f551-41cb-a93d-cb5f9e61bc2b" absoluteBounds="17.015, 1.71, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(17 : 2.19548666978876); (16.375 : 2.19548666978876)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(17 : 2.19548666978876); (16.375 : 2.19548666978876)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/NorthvilleLibraryDataContext/payment/payment_fine" />
       <nodes>
         <classShapeMoniker Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" />

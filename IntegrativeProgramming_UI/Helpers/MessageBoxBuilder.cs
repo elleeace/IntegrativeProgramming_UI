@@ -26,7 +26,7 @@ namespace IntegrativeProgramming_UI.Helpers
 
         public static void ShowSuccess(string message, string title = "Success")
         {
-            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Asterisk); // Asterisk for a more "positive" icon
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Asterisk); 
         }
 
         public static void ShowIncompleteInput(string field = "Some fields")
