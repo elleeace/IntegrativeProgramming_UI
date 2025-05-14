@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using IntegrativeProgramming_UI.Helpers;
+using System.Text.RegularExpressions;
 
 namespace IntegrativeProgramming_UI
 {
@@ -165,9 +166,28 @@ namespace IntegrativeProgramming_UI
 
             btnSubmit.Click += (s, e) =>
             {
-                if (string.IsNullOrWhiteSpace(txtCourseId.Text) || string.IsNullOrWhiteSpace(txtCourseName.Text))
+                string courseId = txtCourseId.Text.Trim();
+                string courseName = txtCourseName.Text.Trim();
+
+                // === Validation ===
+                if (string.IsNullOrWhiteSpace(courseId) || string.IsNullOrWhiteSpace(courseName))
                 {
                     MessageBoxBuilder.ShowWarning("Please fill in all fields.");
+                    return;
+                }
+
+                // Validate format: C followed by 3 digits
+                if (!Regex.IsMatch(courseId, @"^C\d{3}$"))
+                {
+                    MessageBoxBuilder.ShowError("Course ID must be in the format C followed by 3 digits (e.g., C001).");
+                    return;
+                }
+
+                // Check for duplicate Course ID
+                bool exists = db.courses.Any(c => c.course_id == courseId);
+                if (exists)
+                {
+                    MessageBoxBuilder.ShowError("Course ID already exists. Please enter a unique ID.");
                     return;
                 }
 
@@ -175,8 +195,8 @@ namespace IntegrativeProgramming_UI
                 {
                     var newCourse = new course
                     {
-                        course_id = txtCourseId.Text,
-                        course_name = txtCourseName.Text
+                        course_id = courseId,
+                        course_name = courseName
                     };
 
                     db.courses.InsertOnSubmit(newCourse);
@@ -193,6 +213,7 @@ namespace IntegrativeProgramming_UI
 
             targetPanel.Children.Add(btnSubmit);
         }
+
 
 
         public static void BuildBorrowForm(StackPanel targetPanel, NorthvilleLibraryDataContext dbContext, Action onSuccess)
@@ -296,11 +317,13 @@ namespace IntegrativeProgramming_UI
 
             var txtAttendanceId = CreateTextBox("txtAttendanceId");
             var txtStudentId = CreateTextBox("txtStudentId");
+
             var dpDate = new DatePicker
             {
                 SelectedDate = DateTime.Today,
                 Margin = new Thickness(0, 0, 0, 10)
             };
+
             var txtTime = CreateTextBox("txtTimeOfVisit");
             txtTime.Text = DateTime.Now.ToString("HH:mm");
 
@@ -321,20 +344,36 @@ namespace IntegrativeProgramming_UI
 
             btnSubmit.Click += (s, e) =>
             {
-                string attendanceId = txtAttendanceId.Text;
-                string studentId = txtStudentId.Text;
+                string attendanceId = txtAttendanceId.Text.Trim();
+                string studentId = txtStudentId.Text.Trim();
                 DateTime? visitDate = dpDate.SelectedDate;
-                string timeInput = txtTime.Text;
+                string timeInput = txtTime.Text.Trim();
 
-                if (string.IsNullOrWhiteSpace(attendanceId) || string.IsNullOrWhiteSpace(studentId) || visitDate == null || string.IsNullOrWhiteSpace(timeInput))
+                // === Validation ===
+                if (string.IsNullOrWhiteSpace(attendanceId) ||
+                    string.IsNullOrWhiteSpace(studentId) ||
+                    visitDate == null ||
+                    string.IsNullOrWhiteSpace(timeInput))
                 {
                     MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
+                if (!Regex.IsMatch(attendanceId, @"^A\d{3}$"))
+                {
+                    MessageBoxBuilder.ShowError("Attendance ID must be in the format A### (e.g., A001).");
+                    return;
+                }
+
+                if (dbContext.attendances.Any(a => a.attendance_id == attendanceId))
+                {
+                    MessageBoxBuilder.ShowError("Attendance ID already exists. Please enter a unique one.");
+                    return;
+                }
+
                 if (!TimeSpan.TryParse(timeInput, out TimeSpan visitTime))
                 {
-                    MessageBoxBuilder.ShowWarning("Invalid time format. Use HH:mm (e.g., 14:30)");
+                    MessageBoxBuilder.ShowWarning("Invalid time format. Use HH:mm (e.g., 14:30).");
                     return;
                 }
 
@@ -359,16 +398,39 @@ namespace IntegrativeProgramming_UI
             targetPanel.Children.Clear();
 
             var fields = new Dictionary<string, TextBox>();
-            string[] textLabels = { "User ID", "Username", "Password", "Hash", "Role" };
+            var comboBoxes = new Dictionary<string, ComboBox>();
 
+            string[] textLabels = { "User ID", "Username", "Password", "Hash" };
+
+            // Generate next user ID
+            string suggestedUserId = "U001";
+            var lastUser = db.users.OrderByDescending(u => u.user_id).FirstOrDefault();
+            if (lastUser != null && Regex.IsMatch(lastUser.user_id, @"U\d+"))
+            {
+                int number = int.Parse(Regex.Match(lastUser.user_id, @"\d+").Value);
+                suggestedUserId = $"U{(number + 1).ToString("D3")}";
+            }
+
+            // Add standard text fields
             foreach (var label in textLabels)
             {
                 string name = $"txt{label.Replace(" ", "")}";
                 targetPanel.Children.Add(CreateLabel(label));
                 var txt = CreateTextBox(name);
+
+                if (label == "User ID")
+                    txt.Text = suggestedUserId;
+
                 fields[label] = txt;
                 targetPanel.Children.Add(txt);
             }
+
+            // Add Role ComboBox (Student, Clerical Assistant, Librarian)
+            var roleOptions = new[] { "Student", "Clerical Assistant", "Librarian" };
+            var cbUserRole = CreateComboBox(roleOptions);
+            targetPanel.Children.Add(CreateLabel("User Role"));
+            targetPanel.Children.Add(cbUserRole);
+            comboBoxes["User Role"] = cbUserRole;
 
             // IsActive and IsNew dropdowns
             var cbIsActive = CreateComboBox(new[] { "True", "False" });
@@ -390,12 +452,36 @@ namespace IntegrativeProgramming_UI
             {
                 try
                 {
+                    string userId = fields["User ID"].Text.Trim();
+
+                    // === User ID Validation ===
+                    if (string.IsNullOrWhiteSpace(userId))
+                    {
+                        MessageBoxBuilder.ShowError("User ID cannot be empty.");
+                        return;
+                    }
+
+                    if (!Regex.IsMatch(userId, @"^U\d{3}$"))
+                    {
+                        MessageBoxBuilder.ShowError("User ID must start with 'U' followed by exactly 3 digits (e.g., U001).");
+                        return;
+                    }
+
+                    // Check for duplicates
+                    bool exists = db.users.Any(u => u.user_id == userId);
+                    if (exists)
+                    {
+                        MessageBoxBuilder.ShowError("User ID already exists. Please enter a unique ID.");
+                        return;
+                    }
+
+                    // === Add user ===
                     db.usp_AddUser(
-                        fields["User ID"].Text,
+                        userId,
                         fields["Username"].Text,
                         fields["Password"].Text,
                         fields["Hash"].Text,
-                        fields["Role"].Text,
+                        cbUserRole.SelectedItem?.ToString(),
                         bool.Parse(cbIsActive.SelectedItem.ToString()),
                         bool.Parse(cbIsNew.SelectedItem.ToString()),
                         DateTime.Now
@@ -410,8 +496,10 @@ namespace IntegrativeProgramming_UI
                 }
             };
 
+
             targetPanel.Children.Add(btnSubmit);
         }
+
 
 
         public static void BuildAddStudentForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, Action onSuccess)
@@ -447,21 +535,39 @@ namespace IntegrativeProgramming_UI
 
             btnSubmit.Click += (s, e) =>
             {
-                if (string.IsNullOrWhiteSpace(txtStudentId.Text) ||
-                    string.IsNullOrWhiteSpace(txtStudentName.Text) ||
-                    string.IsNullOrWhiteSpace(txtContactNum.Text) ||
-                    cbCourse.SelectedItem == null)
+                string studentId = txtStudentId.Text.Trim();
+                string studentName = txtStudentName.Text.Trim();
+                string contactNumber = txtContactNum.Text.Trim();
+                string selectedCourse = cbCourse.SelectedItem?.ToString();
+
+                // === VALIDATION ===
+                if (string.IsNullOrWhiteSpace(studentId) ||
+                    string.IsNullOrWhiteSpace(studentName) ||
+                    string.IsNullOrWhiteSpace(contactNumber) ||
+                    selectedCourse == null)
                 {
                     MessageBoxBuilder.ShowWarning("Please fill in all fields.");
                     return;
                 }
 
+                // Validate Student ID format: YY-NNN (e.g., 23-001)
+                if (!Regex.IsMatch(studentId, @"^\d{2}-\d{3}$"))
+                {
+                    MessageBoxBuilder.ShowError("Student ID must be in the format YY-NNN (e.g., 23-001).");
+                    return;
+                }
+
+                // Check for duplicate student ID
+                bool exists = db.students.Any(student => student.student_id == studentId);
+                if (exists)
+                {
+                    MessageBoxBuilder.ShowError("Student ID already exists. Please enter a unique ID.");
+                    return;
+                }
+
                 try
                 {
-                    // Look up the course_id based on the selected course_name
-                    var selectedCourseName = cbCourse.SelectedItem.ToString();
-                    var course = db.courses.FirstOrDefault(c => c.course_name == selectedCourseName);
-
+                    var course = db.courses.FirstOrDefault(c => c.course_name == selectedCourse);
                     if (course == null)
                     {
                         MessageBoxBuilder.ShowError("Selected course not found.");
@@ -470,9 +576,9 @@ namespace IntegrativeProgramming_UI
 
                     var newStudent = new student
                     {
-                        student_id = txtStudentId.Text.Trim(),
-                        student_name = txtStudentName.Text.Trim(),
-                        contact_number = txtContactNum.Text.Trim(),
+                        student_id = studentId,
+                        student_name = studentName,
+                        contact_number = contactNumber,
                         course_id = course.course_id
                     };
 
@@ -487,6 +593,7 @@ namespace IntegrativeProgramming_UI
                     MessageBoxBuilder.ShowError("An error occurred while adding the student.\n\nDetails: " + ex.Message);
                 }
             };
+
 
             targetPanel.Children.Add(btnSubmit);
         }
@@ -888,6 +995,81 @@ namespace IntegrativeProgramming_UI
             targetPanel.Children.Add(btnUpdate);
         }
 
+        public static void BuildEditAttendanceForm(StackPanel targetPanel, NorthvilleLibraryDataContext db, string attendanceId, Action onSaved)
+        {
+            targetPanel.Children.Clear();
+
+            var attendance = db.attendances.FirstOrDefault(a => a.attendance_id == attendanceId);
+            if (attendance == null)
+            {
+                MessageBoxBuilder.ShowError("Attendance record not found.");
+                return;
+            }
+
+            // Attendance ID (readonly)
+            targetPanel.Children.Add(CreateLabel("Attendance ID"));
+            var txtAttendanceId = CreateTextBox("txtAttendanceId", attendance.attendance_id);
+            txtAttendanceId.IsEnabled = false;
+            targetPanel.Children.Add(txtAttendanceId);
+
+            // Student ID (readonly)
+            targetPanel.Children.Add(CreateLabel("Student ID"));
+            var txtStudentId = CreateTextBox("txtStudentId", attendance.student_id);
+            txtStudentId.IsEnabled = false;
+            targetPanel.Children.Add(txtStudentId);
+
+            // Visit Date
+            targetPanel.Children.Add(CreateLabel("Date of Visit"));
+            var dpVisitDate = new DatePicker
+            {
+                SelectedDate = attendance.date_of_visit,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+            targetPanel.Children.Add(dpVisitDate);
+
+            // Time of Visit
+            targetPanel.Children.Add(CreateLabel("Time of Visit"));
+            var txtTime = CreateTextBox("txtTimeOfVisit", attendance.time_of_visit.ToString(@"hh\:mm"));
+            targetPanel.Children.Add(txtTime);
+
+            // Update Button
+            var btnUpdate = new Button
+            {
+                Content = "Update Attendance",
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            btnUpdate.Click += (s, e) =>
+            {
+                if (dpVisitDate.SelectedDate == null || string.IsNullOrWhiteSpace(txtTime.Text))
+                {
+                    MessageBoxBuilder.ShowIncompleteInput("Please complete all fields.");
+                    return;
+                }
+
+                if (!TimeSpan.TryParse(txtTime.Text, out TimeSpan visitTime))
+                {
+                    MessageBoxBuilder.ShowError("Invalid time format. Use HH:mm (e.g., 14:30)");
+                    return;
+                }
+
+                try
+                {
+                    attendance.date_of_visit = dpVisitDate.SelectedDate.Value;
+                    attendance.time_of_visit = visitTime;
+
+                    db.SubmitChanges();
+                    MessageBoxBuilder.ShowSuccess("Attendance updated successfully.");
+                    onSaved?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxBuilder.ShowError("Update failed: " + ex.Message);
+                }
+            };
+
+            targetPanel.Children.Add(btnUpdate);
+        }
 
         #endregion
     }

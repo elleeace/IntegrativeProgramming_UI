@@ -21,7 +21,7 @@ namespace IntegrativeProgramming_UI.Services
             db = _db;
         }
 
-        public ObservableCollection<BookCopyDisplay> LoadBookTable()
+        public ObservableCollection<BookCopyDisplay> LoadBookCopyTable()
         {
             return new ObservableCollection<BookCopyDisplay>(
                 (from copy in db.book_copies
@@ -38,6 +38,7 @@ namespace IntegrativeProgramming_UI.Services
                      Location = copy.book_location.room_name + ", " + copy.book_location.section_name
                  }).ToList());
         }
+
 
         public IEnumerable<object> LoadBorrowedBooks()
         {

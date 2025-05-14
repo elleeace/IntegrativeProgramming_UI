@@ -20,7 +20,7 @@ namespace IntegrativeProgramming_UI.Helpers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Database error: " + ex.Message);
+                MessageBoxBuilder.ShowError("Database error: " + ex.Message);
             }
         }
 
@@ -55,9 +55,12 @@ namespace IntegrativeProgramming_UI.Helpers
                 case PaymentModel payment when currentViewKey == "Payment Table":
                     new PaymentService(db).DeletePayment(payment.PaymentID);
                     break;
+                case AttendanceDisplay attendance when currentViewKey == "Attendance Table":
+                    new AttendanceService(db).DeleteAttendance(attendance.AttendanceID);
+                    break;
 
                 default:
-                    MessageBox.Show("No matching handler found for deletion.");
+                    MessageBoxBuilder.ShowError("No matching handler found for deletion.");
                     break;
             }
         }
@@ -84,8 +87,11 @@ namespace IntegrativeProgramming_UI.Helpers
                 case BookCopyDisplay copy:
                     new BookCopyService(db).EditBookCopy(formPanel, db, copy, onSaved);
                     break;
+                case AttendanceDisplay attendance:
+                    new AttendanceService(db).EditAttendance(formPanel, db, attendance, onSaved);
+                    break;
                 default:
-                    MessageBox.Show($"No matching handler found for editing. Object {row.ToString()}");
+                    MessageBoxBuilder.ShowError($"No matching handler found for editing. \n\n Details: Object {row.ToString()}");
                     break;
             }
         }

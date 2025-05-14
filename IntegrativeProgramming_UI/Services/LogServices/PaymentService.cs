@@ -28,7 +28,7 @@ namespace IntegrativeProgramming_UI.Services
                      PaymentDesc = pt.payment_desc,
                      PaymentDate = pt.payment_date,
                      Amount = pt.payment_amount 
-                 }).ToList()
+                 })
             );
         }
 

@@ -304,26 +304,59 @@
                    SelectionUnit="FullRow"
                    Margin="10,10,10,10">
 
-                    <!-- Style: Selected Row Color -->
                     <DataGrid.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#3182ce"/>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#e2e8f0"/>
+                        <!-- Force override of system selection colors -->
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource SecondaryAccent}" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource SecondaryAccent}" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="{DynamicResource MediumBackground}" />
                     </DataGrid.Resources>
 
-                    <!-- Row Style: Background stays light, selected row changes -->
+                    
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
-                            <Setter Property="Padding" Value="8" />
-                            <Setter Property="MinHeight" Value="35" />
-                            <Setter Property="FontSize" Value="12" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="SnapsToDevicePixels" Value="True" />
-                            <Setter Property="BorderThickness" Value="0" />
                             <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="#2d3748"/>
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="Height" Value="35"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </DataGrid.RowStyle>
+
+
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="{DynamicResource LightBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}" />
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Height" Value="35"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MediumBackgroundBrush}" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="10,4"/>
+                            <Setter Property="Margin" Value="4,2"/>
+                            <Setter Property="MinWidth" Value="100"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
 
                 </DataGrid>
             </Border>

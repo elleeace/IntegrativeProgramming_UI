@@ -62,6 +62,7 @@ namespace IntegrativeProgramming_UI
             LoadMainActions();
             LoadStatusCards();
             _username = username;
+            lblWelcomeUser.Text = _username;
         }
 
 
@@ -202,7 +203,7 @@ namespace IntegrativeProgramming_UI
         }
         private void LoadBookTable()
         {
-            dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
+            dgDataGrid.ItemsSource = BookCopyService.LoadBookCopyTable();
         }
 
         private void LoadOverdueBooks()

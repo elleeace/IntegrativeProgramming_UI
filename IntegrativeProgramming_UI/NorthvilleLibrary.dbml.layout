@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20.5, 11" name="NorthvilleLibrary">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 22.75, 11" name="NorthvilleLibrary">
   <DataContextMoniker Name="/NorthvilleLibraryDataContext" />
   <nestedChildShapes>
     <classShape Id="cca90136-e7ca-41a6-80a1-4cba0eafec79" absoluteBounds="11.75, 9.125, 2, 1.6801985950271288">
@@ -8,10 +8,10 @@
         <elementListCompartment Id="7997ace6-6115-401a-b568-8bf84adc2e9c" absoluteBounds="11.765, 9.585, 1.9700000000000002, 1.1201985950271287" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d63f9275-dae4-4fb6-88a1-36346109e12e" absoluteBounds="0.5, 3.375, 2, 2.5232975732286778">
+    <classShape Id="d63f9275-dae4-4fb6-88a1-36346109e12e" absoluteBounds="0.625, 4.25, 2, 2.5232975732286778">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/user" />
       <nestedChildShapes>
-        <elementListCompartment Id="b3e43019-c146-4cee-8aca-79e0d816ceaa" absoluteBounds="0.51499999999999968, 3.8350000000000009, 1.9700000000000002, 1.9632975732286773" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b3e43019-c146-4cee-8aca-79e0d816ceaa" absoluteBounds="0.64000000000000057, 4.7100000000000009, 1.9700000000000002, 1.9632975732286773" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="36ee963b-5bda-46c2-95d5-7b6795d2a642" absoluteBounds="3.5, 1.125, 2, 1.6801985950271288">
@@ -111,10 +111,10 @@
         <classShapeMoniker Id="cad62b10-6ad2-4ad3-b820-ae1015afafb9" />
       </nodes>
     </associationConnector>
-    <classShape Id="ae508de3-0026-43b2-a45a-7e2ebf775e65" absoluteBounds="18.25, 4.75, 2, 2.31252282867829">
+    <classShape Id="ae508de3-0026-43b2-a45a-7e2ebf775e65" absoluteBounds="18.25, 4.875, 2, 2.31252282867829">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_AvailableBook" />
       <nestedChildShapes>
-        <elementListCompartment Id="7e4f6445-e1f6-42a4-8ab0-b52e8b99b3fc" absoluteBounds="18.265, 5.2100000000000009, 1.9700000000000002, 1.75252282867829" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7e4f6445-e1f6-42a4-8ab0-b52e8b99b3fc" absoluteBounds="18.265, 5.3350000000000009, 1.9700000000000002, 1.75252282867829" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="59cf573b-9f99-4a99-aace-d0aacb5e1c57" absoluteBounds="9.75, 3.75, 2, 1.8909733395775152">
@@ -123,22 +123,22 @@
         <elementListCompartment Id="f074ecfc-51d1-4800-b926-877ad6169fbc" absoluteBounds="9.765, 4.21, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="825a8014-aee8-4c2d-97c2-6147a34c1ecb" absoluteBounds="13.75, 4.875, 2, 2.1017480841279017">
+    <classShape Id="825a8014-aee8-4c2d-97c2-6147a34c1ecb" absoluteBounds="13.625, 4.875, 2, 2.1017480841279017">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_fines_report" />
       <nestedChildShapes>
-        <elementListCompartment Id="a8c85edd-83e2-43b3-b5b3-cbbed4dcd8c1" absoluteBounds="13.765, 5.3350000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a8c85edd-83e2-43b3-b5b3-cbbed4dcd8c1" absoluteBounds="13.64, 5.3350000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9f39abe3-ffd8-4791-85a5-a39c09f6da7b" absoluteBounds="16, 4.75, 2, 2.1017480841279017">
+    <classShape Id="9f39abe3-ffd8-4791-85a5-a39c09f6da7b" absoluteBounds="16, 4.875, 2, 2.1017480841279017">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_StudentBorrowHistory" />
       <nestedChildShapes>
-        <elementListCompartment Id="7479d7ba-4f3d-4a9b-9f39-beb5982a4ccd" absoluteBounds="16.015, 5.2100000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7479d7ba-4f3d-4a9b-9f39-beb5982a4ccd" absoluteBounds="16.015, 5.3350000000000009, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d403e280-dad0-4b91-a88d-ee1b36b3bb56" absoluteBounds="4, 3.875, 2, 3.7879460405309988">
+    <classShape Id="d403e280-dad0-4b91-a88d-ee1b36b3bb56" absoluteBounds="20.5, 4.875, 2, 3.7879460405309988">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/vw_OverdueBook" />
       <nestedChildShapes>
-        <elementListCompartment Id="c5664778-64d8-4021-950f-62b92f3cd6f5" absoluteBounds="4.015, 4.335, 1.9700000000000002, 3.2279460405309992" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c5664778-64d8-4021-950f-62b92f3cd6f5" absoluteBounds="20.515, 5.335, 1.9700000000000002, 3.2279460405309992" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="bb7a0b85-a5fc-4df4-b1f7-9da429c3d37a" absoluteBounds="14.375, 1.25, 2, 2.101748084127903">
@@ -147,13 +147,13 @@
         <elementListCompartment Id="5606ea50-dc99-411d-9b14-d9c8b40f961f" absoluteBounds="14.39, 1.71, 1.9700000000000002, 1.541748084127903" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" absoluteBounds="17.25, 1.875, 2, 1.8909733395775157">
+    <classShape Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" absoluteBounds="17, 1.25, 2, 1.8909733395775157">
       <DataClassMoniker Name="/NorthvilleLibraryDataContext/payment" />
       <nestedChildShapes>
-        <elementListCompartment Id="b67aff4c-f551-41cb-a93d-cb5f9e61bc2b" absoluteBounds="17.265, 2.335, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b67aff4c-f551-41cb-a93d-cb5f9e61bc2b" absoluteBounds="17.015, 1.71, 1.9700000000000002, 1.3309733395775158" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(17.25 : 2.61337404206395); (16.375 : 2.61337404206395)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(17 : 2.19548666978876); (16.375 : 2.19548666978876)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/NorthvilleLibraryDataContext/payment/payment_fine" />
       <nodes>
         <classShapeMoniker Id="bc3ab0b1-defe-4430-b1c2-0834d79c3156" />

@@ -1,5 +1,6 @@
 ﻿using IntegrativeProgramming_UI.Helpers;
 using IntegrativeProgramming_UI.Models;
+using IntegrativeProgramming_UI.Models.Catalog;
 using IntegrativeProgramming_UI.Models.Logs;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,13 @@ namespace IntegrativeProgramming_UI.Services
                     Time = at.time_of_visit
                 });
         }
+
+
+        public void EditAttendance(StackPanel formPanel, NorthvilleLibraryDataContext db, AttendanceDisplay attendance, Action onSaved)
+        {
+            FormBuilder.BuildEditAttendanceForm(formPanel, db, attendance.AttendanceID, onSaved);
+        }
+
 
         public void DeleteAttendance(string attendanceId)
         {

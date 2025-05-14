@@ -39,7 +39,7 @@ namespace IntegrativeProgramming_UI.Services
                      IsActive = ut.is_active,
                      IsNew = ut.is_new,
                      CreatedAt = ut.created_at
-                 }).ToList()
+                 })
             );
         }
 

@@ -256,18 +256,14 @@
                    SelectionUnit="FullRow"
                    Margin="10,10,10,10">
 
-                    <!-- Style: Selected Row Color -->
-                    <DataGrid.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource SecondaryAccent}"/>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="{DynamicResource LightBackground}"/>
-                    </DataGrid.Resources>
 
                     <!-- Row Style: Background stays dark, selected row changes -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
                             <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="Height" Value="50"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
                             <Setter Property="Padding" Value="5"/>
@@ -293,7 +289,7 @@
                         <Style TargetType="DataGridCell">
                             <Setter Property="Padding" Value="10,4"/>
                             <Setter Property="Margin" Value="4,2"/>
-                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="MinWidth" Value="100"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Setter Property="Background" Value="Transparent"/>
@@ -348,11 +344,14 @@
                     </Button>
                 </Grid>
 
-                <!-- Form Content -->
-                <StackPanel x:Name="spFormFields"  Grid.Row="1" Margin="10">
-                    <!-- Dynamic Population-->
-                </StackPanel>
+                <!-- Scrollable Form Content -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
+                    <StackPanel x:Name="spFormFields">
+                        <!-- Dynamic form content goes here -->
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Border>
+
     </Grid>
 </Window>

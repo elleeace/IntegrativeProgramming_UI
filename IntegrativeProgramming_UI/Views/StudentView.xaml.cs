@@ -80,12 +80,12 @@ namespace IntegrativeProgramming_UI
         {
             try
             {
-                var rawHistory = db.borrow_transactions
-                    .Where(b => b.student_id == studentID)
+                var activeBorrows = db.borrow_transactions
+                    .Where(b => b.student_id == studentID && b.borrow_status == "Borrowed") // Adjust status value as needed
                     .OrderByDescending(b => b.borrow_date)
                     .ToList();
 
-                var formattedHistory = rawHistory.Select(b => new
+                var formattedHistory = activeBorrows.Select(b => new
                 {
                     CopyID = b.book_copy_id,
                     BorrowDate = b.borrow_date.ToString("MM/dd/yyyy"),
@@ -98,11 +98,12 @@ namespace IntegrativeProgramming_UI
             }
             catch (System.Exception ex)
             {
-                MessageBoxBuilder.ShowError($"Failed to load borrow history.\n\nDetails: {ex.Message}", "Load Error");
+                MessageBoxBuilder.ShowError($"Failed to load active borrow records.\n\nDetails: {ex.Message}", "Load Error");
             }
         }
 
-  
+
+
 
         private void btnMyRecords_Click(object sender, RoutedEventArgs e)
         {
@@ -159,11 +160,7 @@ namespace IntegrativeProgramming_UI
                 // Bind to DataGrid
                 dgDataGrid.ItemsSource = attendanceLogs;
 
-                // Update visual library visit count (if exists)
-                if (txtLibraryVisits != null && int.TryParse(txtLibraryVisits.Text, out int visitCount))
-                {
-                    txtLibraryVisits.Text = (visitCount + 1).ToString();
-                }
+               
             }
             catch (System.Exception ex)
             {

@@ -48,7 +48,6 @@ namespace IntegrativeProgramming_UI
         {
             InitializeComponent();
             _viewReloader = new ViewReloader();
-            RegisterViewReloaders();
 
             BookCopyService = new BookCopyService(db);
             BorrowService = new BorrowService(db);
@@ -65,6 +64,7 @@ namespace IntegrativeProgramming_UI
             LoadStatusCards();
             _username = username;
             tbUsername.Text = _username.Substring(3);
+            RegisterViewReloaders();
         }
 
         #region Helpers and UI
@@ -90,8 +90,8 @@ namespace IntegrativeProgramming_UI
             }
         }
 
-     
 
+    
 
 
         private void LoadMainActions()
@@ -154,6 +154,7 @@ namespace IntegrativeProgramming_UI
             _viewReloader.Register("Attendance Table", LoadAttendanceTable);
             _viewReloader.Register("Borrowed Books", LoadBorrowedBooks);
         }
+   
 
         #endregion
         private void OnEditClick(object sender, RoutedEventArgs e)
@@ -237,6 +238,7 @@ namespace IntegrativeProgramming_UI
 
         public void LoadBorrowedBooks()
         {
+            IdentifyKey("Borrowed Books");
             dgDataGrid.ItemsSource = BookCopyService.LoadBorrowedBooks();
         }
         public void OnReturnClick(object sender, RoutedEventArgs e)
@@ -305,7 +307,7 @@ namespace IntegrativeProgramming_UI
 
         private void LoadBookTable()
         {
-            dgDataGrid.ItemsSource = BookCopyService.LoadBookTable();
+            dgDataGrid.ItemsSource = BookCopyService.LoadBookCopyTable();
         }
         public void OnAddBookClick(object sender, RoutedEventArgs e)
         {
@@ -334,18 +336,20 @@ namespace IntegrativeProgramming_UI
         }
         public void OnOverdueClick(object sender, RoutedEventArgs e)
         {
-            IdentifyKey("Book Table");
+            IdentifyKey("Overdue Books");
             LoadOverdueBooks();
         }
 
         private void ShowAvailableBooks()
         {
-            IdentifyKey("Book Table");
+            IdentifyKey("Available Books");
             dgDataGrid.ItemsSource = BookCopyService.LoadAvailableBooks();
         }
         public void OnAvailableClick(object sender, RoutedEventArgs e)
         {
+            IdentifyKey("Available Books");
             ShowAvailableBooks();
+
         }
 
         //TRANSACTOINS
@@ -415,7 +419,7 @@ namespace IntegrativeProgramming_UI
             {
                 StudentService.AddStudent(spFormFields, () =>
                 {
-                    MessageBox.Show("Student Successfully Added");
+                    HideFormPanel(null, null);
                     _viewReloader.Reload(currentViewKey);
                 });
             }
@@ -423,6 +427,7 @@ namespace IntegrativeProgramming_UI
             {
                 MessageBoxBuilder.ShowError($"An unexpected error occurred while trying to add the student.\n\nDetails: {ex.Message}", "Add Student Error");
             }
+            LoadStudentTable();
 
         }
 
@@ -443,7 +448,6 @@ namespace IntegrativeProgramming_UI
                 CourseService.CreateCourse(spFormFields, () =>
                     {
                         HideFormPanel(null, null);
-                        MessageBox.Show("Course successfully added!");
                         _viewReloader.Reload(currentViewKey);
                     });
             }

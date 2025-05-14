@@ -79,7 +79,7 @@ namespace IntegrativeProgramming_UI
                 case "Catalog":
                     return new List<MainAction>
             {
-                new MainAction { Label = "Add Book", ClickHandler = _view.OnAddBookClick, HighlightColor = Brushes.MediumSeaGreen },
+                new MainAction { Label = "Add Book and Copies", ClickHandler = _view.OnAddBookClick, HighlightColor = Brushes.MediumSeaGreen },
                 new MainAction { Label = "Show Overdue", ClickHandler = _view.OnOverdueClick, HighlightColor = Brushes.Orange },
                 new MainAction { Label = "Show Available", ClickHandler = _view.OnAvailableClick, HighlightColor = Brushes.LightSkyBlue }
             };

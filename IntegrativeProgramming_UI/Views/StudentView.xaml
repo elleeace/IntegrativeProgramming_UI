@@ -189,25 +189,28 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Main DataGrid Area -->
-                <Border Grid.Row="1" Background="#ffffff" Margin="5" CornerRadius="5" BorderBrush="#e2e8f0" BorderThickness="1">
+                <Border Grid.Row="1" Background="#ffffff" Margin="0" CornerRadius="0" BorderBrush="#e2e8f0" BorderThickness="1">
                     <DataGrid x:Name="dgDataGrid"
-        AutoGenerateColumns="True"
-        HeadersVisibility="Column"
-        CanUserAddRows="False"
-        Background="#ffffff"
-        RowBackground="Transparent"
-        AlternatingRowBackground="#f7fafc"
-        Foreground="#2d3748"
-        GridLinesVisibility="None"
-        BorderThickness="0"
-        FontSize="10"
-        IsReadOnly="True"
-        HorizontalGridLinesBrush="Transparent"
-        VerticalGridLinesBrush="Transparent"
-        SelectedItem="{Binding SelectedItem}"
-        SelectionUnit="FullRow"
-        Margin="10,10,10,10">
+          AutoGenerateColumns="True"
+          HeadersVisibility="Column"
+          CanUserAddRows="False"
+          Background="#ffffff"
+          RowBackground="Transparent"
+          AlternatingRowBackground="#f7fafc"
+          Foreground="#2d3748"
+          GridLinesVisibility="None"
+          BorderThickness="0"
+          FontSize="10"
+          IsReadOnly="True"
+          HorizontalGridLinesBrush="Transparent"
+          VerticalGridLinesBrush="Transparent"
+          SelectedItem="{Binding SelectedItem}"
+          SelectionUnit="FullRow"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          ColumnWidth="*"
+          Margin="0">
+
 
                         <!-- Style: Selected Row Color -->
                         <DataGrid.Resources>
@@ -215,16 +218,17 @@
                             <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#e2e8f0"/>
                         </DataGrid.Resources>
 
-                        <!-- Row Style: Background stays light, selected row changes -->
+                        <!-- Row Style -->
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
-                                <Setter Property="Padding" Value="8" />
-                                <Setter Property="MinHeight" Value="35" />
-                                <Setter Property="FontSize" Value="12" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                <Setter Property="SnapsToDevicePixels" Value="True" />
-                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Padding" Value="8"/>
+                                <Setter Property="MinHeight" Value="35"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="MinWidth" Value="35"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                <Setter Property="BorderThickness" Value="0"/>
                                 <Setter Property="Background" Value="Transparent"/>
                                 <Setter Property="Foreground" Value="#2d3748"/>
                             </Style>
@@ -232,6 +236,7 @@
 
                     </DataGrid>
                 </Border>
+
             </Grid>
         </DockPanel>
     </Grid>

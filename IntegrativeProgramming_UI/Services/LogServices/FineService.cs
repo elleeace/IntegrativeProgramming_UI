@@ -31,7 +31,7 @@ namespace IntegrativeProgramming_UI.Services
                      PaymentAmount = ft.payment_amount ?? 0,
                      AssessedDate = ft.assessed_date,
                      Paid = ft.is_paid
-                 }).ToList()
+                 })
             );
         }
 
